@@ -22,33 +22,20 @@
   </head>
   <body>
 
-<!--
-    <div class='frame' id='cms'>
+    <div class='frame'>
       <a-scene embedded>
-        <a-sky id='image-360' radius='10' src='img/CMS_equirectangular_16384.jpg'></a-sky>
-      </a-scene>
-    </div>
--->
 
-    <div class='frame' id='atlas'>
-      <a-scene embedded>
-        <a-sky id='image-360' radius='10' src='img/_MA28252Panorama.jpg'></a-sky>
+        <a-assets>
+          <img id='cms' crossorigin='anonymous' src='img/CMS_equirectangular_16384.jpg'>
+          <img id='atlas' crossorigin='anonymous' src='img/_MA28252Panorama.jpg'>
+          <img id='alice' crossorigin='anonymous' src='img/_MA27720Panorama.jpg'>
+          <img id='lhcb' crossorigin='anonymous' src='img/_MA28452Panorama.jpg'>
+        </a-assets>
+
+        <a-sky id='image-360' radius='10' src='#atlas'></a-sky>
+
       </a-scene>
     </div>
 
-<!--
-    <div class='frame' id='alice'>
-      <a-scene embedded>
-        <a-sky id='image-360' radius='10' src='img/_MA27720Panorama.jpg'></a-sky>
-      </a-scene>
-    </div>
--->
-<!--
-    <div class='frame' id='lhcb'>
-      <a-scene embedded>
-        <a-sky id='image-360' radius='10' src='img/_MA28452Panorama.jpg'></a-sky>
-      </a-scene>
-    </div>
--->
   </body>
 </html>
