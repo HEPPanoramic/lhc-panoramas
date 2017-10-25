@@ -5,12 +5,7 @@
     <title>LHC panoramas v0.1</title>
 
     <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
-    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
-    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
-    <script src="components/set-image.js"></script>
-
+  
     <style>
       .frame {
         border: 10px dashed #ccc;
@@ -29,10 +24,10 @@
           <img id="cms" crossorigin="anonymous" src="img/CMS_equirectangular_16384.jpg">
           <img id="atlas" crossorigin="anonymous" src="img/_MA28252Panorama.jpg">
           <img id="alice" crossorigin="anonymous" src="img/_MA27720Panorama.jpg">
-          <!--<img id="lhcb" crossorigin="anonymous" src="img/_MA28452Panorama.jpg">-->
+          <img id="lhcb" crossorigin="anonymous" src="img/_MA28452Panorama.jpg">
         </a-assets>
 
-        <a-sky id="image-360" radius="10" src="#atlas"></a-sky>
+        <a-sky id="image-360" radius="10" src="#cms"></a-sky>
 
       </a-scene>
     </div>
