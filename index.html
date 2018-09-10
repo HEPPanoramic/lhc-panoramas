@@ -9,19 +9,22 @@
     <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
     <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
     <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <!--Version 2.0-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <script src="components/set-image.js"></script>
   </head>
   <body>
     <a-scene>
       <a-assets>
-        <img id="sheep" crossorigin="anonymous" src="images/sheep.jpg">
-        <img id="sheep-thumb" crossorigin="anonymous" src="images/sheep.jpg">
-        <img id="beach-thumb" crossorigin="anonymous" src="images/beach.jpg">
-        <img id="fountain-thumb" crossorigin="anonymous" src="images/fountain.jpg">
-        <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
-        <img id="beach" crossorigin="anonymous" src="images/beach.jpg">
-        <img id="fountain" crossorigin="anonymous" src="images/fountain.jpg">
-
+          <div class="image_assets">
+            <img id="sheep" crossorigin="anonymous" src="images/sheep.jpg">
+            <img id="sheep-thumb" crossorigin="anonymous" src="images/sheep.jpg">
+            <img id="beach-thumb" crossorigin="anonymous" src="images/beach.jpg">
+            <img id="fountain-thumb" crossorigin="anonymous" src="images/fountain.jpg">
+            <img id="beach" crossorigin="anonymous" src="images/beach.jpg">
+            <img id="fountain" crossorigin="anonymous" src="images/fountain.jpg">
+          </div>
         <!-- Image link template to be reused. -->
         <script id="link" type="text/html">
           <a-entity class="link"
