@@ -56,7 +56,7 @@ class AssetLoader {
                         );
 
                         // Create entity
-                        //<a-entity template="src: #link" data-src="#sheep" data-thumb="#sheep-thumb"></a-entity>
+                        //<a-entity template="src: #link" data-src="#atlas_1" data-thumb="#atlas_1-thumb"></a-entity>
                         // $("a-entity#links").append(
                         //     "<a-entity template='src: #link' data-src='#" + id + "' " +
                         //     "data-thumb='#" + id + "-thumb'></a-entity>"
