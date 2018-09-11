@@ -19,12 +19,12 @@
         <div class="image_assets">
             <!--Old way of adding individual assets.-->
             <div class="basic_assets">
-                <img id="sheep" crossorigin="anonymous" src="images/sheep.jpg">
-                <img id="sheep-thumb" crossorigin="anonymous" src="images/sheep.jpg">
-                <img id="beach-thumb" crossorigin="anonymous" src="images/beach.jpg">
-                <img id="fountain-thumb" crossorigin="anonymous" src="images/fountain.jpg">
-                <img id="beach" crossorigin="anonymous" src="images/beach.jpg">
-                <img id="fountain" crossorigin="anonymous" src="images/fountain.jpg">
+                <img id="atlas_1-thumb" crossorigin="anonymous" src="images/atlas_1.jpg">
+                <img id="atlas_1-thumb" crossorigin="anonymous" src="images/atlas_1.jpg">
+                <img id="atlas_8-thumb" crossorigin="anonymous" src="images/atlas_8.jpg">
+                <img id="atlas_9-thumb" crossorigin="anonymous" src="images/atlas_9.jpg">
+                <img id="atlas_8-thumb" crossorigin="anonymous" src="images/atlas_8.jpg">
+                <img id="atlas_9-thumb" crossorigin="anonymous" src="images/atlas_9.jpg">
             </div>
         </div>
         <!-- Image link template to be reused. -->
@@ -41,12 +41,12 @@
       </a-assets>
 
       <!-- 360-degree image. -->
-      <a-sky id="image-360" radius="10" src="#beach"></a-sky>
+      <a-sky id="image-360" radius="10" src="#atlas_8"></a-sky>
       <!-- Image links. -->
       <a-entity id="links" layout="type: line; margin: 1.5" position="-1.5 1.5 -4">
-        <a-entity template="src: #link" data-src="#sheep" data-thumb="#sheep-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#beach" data-thumb="#beach-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#fountain" data-thumb="#fountain-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#atlas_1" data-thumb="#atlas_1-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#atlas_8" data-thumb="#atlas_8-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#atlas_9" data-thumb="#atlas_9-thumb"></a-entity>
       </a-entity>
 
       <!--Add the text-->
