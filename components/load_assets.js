@@ -1,3 +1,14 @@
+AFRAME.registerComponent('initial', {
+    schema: {
+        files: {type: 'object'}
+    },
+
+    init: function () {
+        var stringToLog =
+    }
+});
+
+
 class AssetLoader {
     constructor(folder, div_name) {
         this.folder = folder;
