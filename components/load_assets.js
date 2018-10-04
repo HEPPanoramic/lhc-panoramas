@@ -1,86 +1,53 @@
-AFRAME.registerComponent('initial', {
-    schema: {
-        files: {type: 'object'}
-    },
-
+AFRAME.registerComponent('load_assets', {
     init: function () {
-        var stringToLog =
+        console.log('I am ready!');
     }
 });
 
+var images = [];
+var folder = 'images/';
 
-class AssetLoader {
-    constructor(folder, div_name) {
-        this.folder = folder;
-        this.div_name = div_name;
-        console.log(this.div_name);
-        this.div_created = false;
-        this.pict_json = {};
-    }
-
-    // Create <div> tag to help organize the src of the image
-    create_div(super_div="image_assets") {
-        if (!($("div." + this.div_name).length > 0)) {
-            $("div." + super_div).append("<div class=\"" + this.div_name + "\"></div>");
-            this.div_created = true;
-            this.pict_json[this.folder] = [];
+function makeAjaxCall(url, methodType, callback){
+   var xhr = new XMLHttpRequest();
+   xhr.open(methodType, url, true);
+   xhr.send();
+   xhr.onreadystatechange = function(){
+     if (xhr.readyState === 4){
+        if (xhr.status === 200){
+           console.log("xhr done successfully");
+           var resp = xhr.responseText;
+           callback(resp, url);
+        } else {
+           console.log("xhr failed");
         }
-    }
-
-    // Create the image assets
-    create_assets() {
-        // Check if parent div exists
-        if (!this.div_created) {
-            this.create_div();
-
-        }
-
-        // Create local variables to remove need for this. declaration
-        var folder = this.folder;
-        var div_name = this.div_name;
-
-        $.ajax({
-            url : this.folder,
-            success: function (data) {
-                // Parse the ajax object
-                $(data).find("a").attr("href", function (i, val) {
-                    var ext = val.match(/\.(jpe?g|png|gif)$/);
-                    console.log(i);
-                    console.log(val);
-                    if( ext ) {
-                        // Create the image id
-                        var id = val.substring(0, ext.index);
-                        console.log(id);
-
-                        // The image
-                        $("div." + div_name).append(
-                            "<img id='" + id + "' " +
-                            "crossorigin='anonymous' " +
-                            "src='" + folder + val + "'>"
-                        );
-
-                        //Create image thumbnail
-                        $("div." + div_name).append(
-                            "<img id='" + id + "-thumb' " +
-                            "crossorigin='anonymous' " +
-                            "src='" + folder + val + "'>"
-                        );
-
-                        // Create entity
-                        //<a-entity template="src: #link" data-src="#atlas_1" data-thumb="#atlas_1-thumb"></a-entity>
-                        // $("a-entity#links").append(
-                        //     "<a-entity template='src: #link' data-src='#" + id + "' " +
-                        //     "data-thumb='#" + id + "-thumb'></a-entity>"
-                        // );
-                    }
-                });
-            }
-        });
-    }
+     } else {
+        console.log("xhr processing going on");
+     }
+   }
+   console.log("request sent succesfully");
 }
 
-// Create basic asset loader
-window.onload = function() {
-    var asset = new AssetLoader("images/", "basic_assets");
-    asset.create_assets();
+makeAjaxCall(folder, "GET", addImages);
+
+function addImages(data, folder) {
+    var divEl = document.querySelector("div");
+    $(data).find("a").attr("href", function(i, val) {
+        if(val.match(/\.(jpe?g|png|gif)$/)) {
+            id = val.split(".")[0];
+
+            // Create the image
+            let imgEl = document.createElement('img');
+            imgEl.setAttribute('id', id);
+            imgEl.setAttribute('crossorigin', 'anonymous');
+            imgEl.setAttribute('src', folder + val);
+            divEl.appendChild(imgEl);
+
+            // Create the thumb
+            let imgThumb = document.createElement('img');
+            imgThumb.setAttribute('id', id + '-thumb');
+            imgThumb.setAttribute('crossorigin', 'anonymous');
+            imgThumb.setAttribute('src', folder + val);
+            divEl.append(imgThumb);
+        }
+    });
 }
