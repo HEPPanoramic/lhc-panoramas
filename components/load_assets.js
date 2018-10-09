@@ -27,27 +27,61 @@ function makeAjaxCall(url, methodType, callback){
    console.log("request sent succesfully");
 }
 
-makeAjaxCall(folder, "GET", addImages);
+makeAjaxCall(folder, "GET", extractAjaxData);
 
-function addImages(data, folder) {
-    var divEl = document.querySelector("div#images");
+function extractAjaxData(data, folder) {
+    var images = [];
+    var ids = [];
     $(data).find("a").attr("href", function(i, val) {
         if(val.match(/\.(jpe?g|png|gif)$/)) {
-            id = val.split(".")[0];
+            images.push(val);
 
-            // Create the image
-            let imgEl = document.createElement('img');
-            imgEl.setAttribute('id', id);
-            imgEl.setAttribute('crossorigin', 'anonymous');
-            imgEl.setAttribute('src', folder + val);
-            divEl.appendChild(imgEl);
-
-            // Create the thumb
-            let imgThumb = document.createElement('img');
-            imgThumb.setAttribute('id', id + '-thumb');
-            imgThumb.setAttribute('crossorigin', 'anonymous');
-            imgThumb.setAttribute('src', folder + val);
-            divEl.append(imgThumb);
+            var id = val.split('.')[0];
+            ids.push(id);
         }
     });
+
+    addImages(images, ids, folder);
 }
+
+function addImages(images, ids, folder) {
+    var divEl = document.querySelector("div#images");
+    for(var i=0; i < images.length; i++) {
+        // Create image tags
+        let imgEl = document.createElement("img");
+        imgEl.setAttribute('id', ids[i]);
+        imgEl.setAttribute('crossorigin', 'anonymous');
+        imgEl.setAttribute('src', folder + images[i]);
+        divEl.appendChild(imgEl);
+
+        // Create the image thumbnails
+        let imgThumb = document.createElement('img');
+        imgThumb.setAttribute('id', ids[i] + '-thumb');
+        imgThumb.setAttribute('crossorigin', 'anonymous');
+        imgThumb.setAttribute('src', folder + images[i]);
+        divEl.append(imgThumb);
+    }
+}
+
+// function addImages(data, folder) {
+//     var divEl = document.querySelector("div#images");
+//     $(data).find("a").attr("href", function(i, val) {
+//         if(val.match(/\.(jpe?g|png|gif)$/)) {
+//             id = val.split(".")[0];
+//
+//             // Create the image
+//             let imgEl = document.createElement('img');
+//             imgEl.setAttribute('id', id);
+//             imgEl.setAttribute('crossorigin', 'anonymous');
+//             imgEl.setAttribute('src', folder + val);
+//             divEl.appendChild(imgEl);
+//
+//             // Create the thumb
+//             let imgThumb = document.createElement('img');
+//             imgThumb.setAttribute('id', id + '-thumb');
+//             imgThumb.setAttribute('crossorigin', 'anonymous');
+//             imgThumb.setAttribute('src', folder + val);
+//             divEl.append(imgThumb);
+//         }
+//     });
+// }
