@@ -30,7 +30,7 @@ function makeAjaxCall(url, methodType, callback){
 makeAjaxCall(folder, "GET", addImages);
 
 function addImages(data, folder) {
-    var divEl = document.querySelector("div");
+    var divEl = document.querySelector("div#images");
     $(data).find("a").attr("href", function(i, val) {
         if(val.match(/\.(jpe?g|png|gif)$/)) {
             id = val.split(".")[0];
