@@ -42,6 +42,10 @@ function extractAjaxData(data, folder) {
     });
 
     addImages(images, ids, folder);
+    addEntities(ids);
+    
+    let rand = getRandomInt(0, ids.length);
+    establishSky(ids[rand]);
 }
 
 function addImages(images, ids, folder) {
@@ -63,25 +67,22 @@ function addImages(images, ids, folder) {
     }
 }
 
-// function addImages(data, folder) {
-//     var divEl = document.querySelector("div#images");
-//     $(data).find("a").attr("href", function(i, val) {
-//         if(val.match(/\.(jpe?g|png|gif)$/)) {
-//             id = val.split(".")[0];
-//
-//             // Create the image
-//             let imgEl = document.createElement('img');
-//             imgEl.setAttribute('id', id);
-//             imgEl.setAttribute('crossorigin', 'anonymous');
-//             imgEl.setAttribute('src', folder + val);
-//             divEl.appendChild(imgEl);
-//
-//             // Create the thumb
-//             let imgThumb = document.createElement('img');
-//             imgThumb.setAttribute('id', id + '-thumb');
-//             imgThumb.setAttribute('crossorigin', 'anonymous');
-//             imgThumb.setAttribute('src', folder + val);
-//             divEl.append(imgThumb);
-//         }
-//     });
-// }
+function addEntities(ids) {
+    var entityEl = document.querySelector("a-entity#links");
+    for(var i=0; i < ids.length; i++) {
+        let subEnt = document.createElement("a-entity");
+        subEnt.setAttribute("template","src: #link");
+        subEnt.setAttribute("data-src", "#" + ids[i]);
+        subEnt.setAttribute("data-thumb", "#" + ids[i] + "-thumb");
+        entityEl.append(subEnt);
+    }
+}
+
+function establishSky(image) {
+    var skyEl = document.querySelector("a-sky");
+    skyEl.setAttribute("src", "#"+image);
+}
+
+function getRandomInt(min,max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
