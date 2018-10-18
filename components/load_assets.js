@@ -43,7 +43,7 @@ function extractAjaxData(data, folder) {
 
     addImages(images, ids, folder);
     addEntities(ids);
-    
+
     let rand = getRandomInt(0, ids.length);
     establishSky(ids[rand]);
 }
@@ -83,6 +83,7 @@ function establishSky(image) {
     skyEl.setAttribute("src", "#"+image);
 }
 
+// For random start image
 function getRandomInt(min,max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
