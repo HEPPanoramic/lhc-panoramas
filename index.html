@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>ATLAS Panorama</title>
-    <meta name="description" content="ATLAS Panorama Webpage - A-Frame">
+    <meta name="description" content="ATLAS Panorama Webpage - A-Frame"/>
+    <link rel="icon" type="image/png" href="logo/cern_logo.png"/>
 
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
@@ -14,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script src="components/set-image.js"></script>
-    <script src="components/load_assets.js"></script>
+    <script src="components/load-assets.js"></script>
   </head>
   <body>
     <a-scene>
@@ -34,12 +35,11 @@
 
       <!-- 360-degree image. -->
       <a-sky id="image-360" radius="10" src="#atlas_8"></a-sky>
+
       <!-- Image links. -->
-      <a-entity id="links" layout="type: line; margin: 1.5" position="-1.5 1.5 -4">
-        <!-- <a-entity template="src: #link" data-src="#atlas_1" data-thumb="#atlas_1-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#atlas_8" data-thumb="#atlas_8-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#atlas_9" data-thumb="#atlas_9-thumb"></a-entity> -->
-      </a-entity>
+      <a-entity id="links_top" layout="type: line; margin: 1.5" position="-1.5 1.5 -4"></a-entity>
+      <a-entity id="links_bottom" layout="type: line; margin: 1.5" position="-1.5 0.25 -4"></a-entity>
+
 
       <!--Add the text-->
       <a-entity text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
