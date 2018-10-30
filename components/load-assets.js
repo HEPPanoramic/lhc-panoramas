@@ -56,7 +56,7 @@ function extractAjaxData(data, folder) {
     });
 
     // Save data into this session
-
+    sessionStorage.setItem('images', ids);
 
     // Create the image components
     addImages(images, ids, folder);
@@ -118,11 +118,13 @@ function getRandomInt(min,max) {
  * @param Array ids An array of all the image names to be placed
  */
 function addEntities(ids) {
-    var start = 0;
-    var max = 3;
-    var size = ids.length;
+    var group_size = 3;
+    var groups = arr.map(function(e,i){
+        return i%group_size===0 ? arr.slice(i,i+group_size) : null;
+    }).filter(function(e){ return e; });
+
     var top_entityEl = document.querySelector("a-entity#links_top");
-    for(var i=0; i < 3; i++) {
+    for(var i=0; i < 1; i++) {
         let subEnt = document.createElement("a-entity");
         subEnt.setAttribute("template","src: #link");
         subEnt.setAttribute("data-src", "#" + ids[i]);
