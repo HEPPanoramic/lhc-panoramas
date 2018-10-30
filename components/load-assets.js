@@ -119,8 +119,8 @@ function getRandomInt(min,max) {
  */
 function addEntities(ids) {
     var group_size = 3;
-    var groups = arr.map(function(e,i){
-        return i%group_size===0 ? arr.slice(i,i+group_size) : null;
+    var groups = ids.map(function(e,i){
+        return i%group_size===0 ? ids.slice(i,i+group_size) : null;
     }).filter(function(e){ return e; });
 
     var top_entityEl = document.querySelector("a-entity#links_top");
