@@ -36,26 +36,26 @@
                     </a-entity>
                 </script>
                 <script id="scroll-left" type="text/html">
-                    <a-entity class="scroll-left"
-                    geometry="primitive: plane; height: 1; width: 1"
-                    material="shader: flat; src: left-arrow"
-                    event-set__1="_evnet: mousedown; scale: 1 1 1"
-                    event-set__2="_event: mouseup: scale: 1.2 1.2 1"
+                    <a-entity class="link"
+                    geometry="primitive: plane; height: 2; width: 1"
+                    material="shader: flat; src: #left-arrow"
+                    event-set__1="_event: mousedown; scale: 1 1 1"
+                    event-set__2="_event: mouseup; scale: 1.2 1.2 1"
                     event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
                     event-set__4="_event: mouseleave; scale: 1 1 1"
-                    scroll-left="on: click">
+                    scroll-left="on: click; target: #image-360; src: ${src}">
                     </a-entity>
                 </script>
                 <script id="scroll-right" type="text/html">
-                    <a-entity class="scroll-right"
-                    geometry="primitive: plane; height: 1; width: 1"
-                    material="shader: flat; src: left-arrow"
+                    <a-image class="scroll-right"
+                    geometry="primitive: plane; height: 2; width: 1"
+                    material="shader: flat; src: #left-arrow"
                     event-set__1="_evnet: mousedown; scale: 1 1 1"
                     event-set__2="_event: mouseup: scale: 1.2 1.2 1"
                     event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
                     event-set__4="_event: mouseleave; scale: 1 1 1"
                     scroll-left="on: click">
-                    </a-entity>
+                    </a-image>
                 </script>
             </a-assets>
 
@@ -67,11 +67,10 @@
             <a-entity id="links_bottom" layout="type: line; margin: 1.5" position="-1.5 0.25 -4"></a-entity>
 
             <!--Scrollers-->
-            <!-- <a-entity id="scroll-left" layout="type: line; margin: 1.5" position="-0.5 1.5 -4">
-                <a-entity template="src: #"
-            </a-entity> -->
-
-
+            <a-entity id="left-scroll" position="-2.75 1.0 -4">
+                <!-- <a-entity template="src: #scroll-left" data-src="#left-arrow" data-thumb="#left-arrow"></a-entity> -->
+                <a-image src="#left-arrow" scroll-left></a-image>
+            </a-entity>
 
             <!--Add the text-->
             <a-entity text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
