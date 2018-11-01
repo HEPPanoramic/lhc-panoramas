@@ -55,9 +55,6 @@ function extractAjaxData(data, folder) {
         }
     });
 
-    // Save data into this session
-    sessionStorage.setItem('images', ids);
-
     // Create the image components
     addImages(images, ids, folder);
 
@@ -123,8 +120,16 @@ function addEntities(ids) {
         return i%group_size===0 ? ids.slice(i,i+group_size) : null;
     }).filter(function(e){ return e; });
 
+    var image_groups = new ImageGroups(groups);
+
+    var init_groups = image_groups.get_next_group();
+
+    // Save data into this session
+    sessionStorage.setItem('images', image_groups);
+
+
     var top_entityEl = document.querySelector("a-entity#links_top");
-    for(var i=0; i < 3; i++) {
+    for(var i=0; i < init_groups[0]; i++) {
         let subEnt = document.createElement("a-entity");
         subEnt.setAttribute("template","src: #link");
         subEnt.setAttribute("data-src", "#" + ids[i]);
@@ -132,7 +137,7 @@ function addEntities(ids) {
         top_entityEl.append(subEnt);
     }
     var bottom_entityEl = document.querySelector("a-entity#links_bottom");
-    for(var i=3; i < 6; i++) {
+    for(var i=3; i < init_groups[1]; i++) {
         let subEnt = document.createElement("a-entity");
         subEnt.setAttribute("template","src: #link");
         subEnt.setAttribute("data-src", "#" + ids[i]);
@@ -140,6 +145,25 @@ function addEntities(ids) {
         bottom_entityEl.append(subEnt);
     }
 }
+
+class ImageGroups {
+    constructor(groups) {
+        var group_size = 2;
+        this.index = 0;
+        this.clusters = groups.map(function (e,i) {
+            return i%group_size===0 ? groups.slive(i,i+group_size) : null;
+        }).filter(function(e){ return e; });
+    }
+    get_next_group() {
+        let group = this.clusters[this.index];
+        this.index += 1;
+        return group
+    }
+    get_clusters() {
+        return this.clusters;
+    }
+}
+
 
 // Call makeAjaxCall which will cascade into the other functions
 makeAjaxCall(folder, extractAjaxData);
