@@ -118,41 +118,52 @@ function addEntities(ids) {
     var image_groups = new ImageGroups();
     image_groups.create_groups(ids);
 
-    var top_entityEl = document.querySelector("a-entity#links_top");
-    for(var i=0; i < 3; i++) {
-        let subEnt = document.createElement("a-entity");
-        subEnt.setAttribute("template","src: #link");
-        subEnt.setAttribute("data-src", "#" + ids[i]);
-        subEnt.setAttribute("data-thumb", "#" + ids[i] + "-thumb");
-        top_entityEl.append(subEnt);
-    }
+    image_groups.set_group_next("a-entity#links_top");
+    image_groups.set_group_next("a-entity#links_bottom");
 
-    var bottom_entityEl = document.querySelector("a-entity#links_bottom");
-    for(var i=3; i < 4; i++) {
-        let subEnt = document.createElement("a-entity");
-        subEnt.setAttribute("template","src: #link");
-        subEnt.setAttribute("data-src", "#" + ids[i]);
-        subEnt.setAttribute("data-thumb", "#" + ids[i] + "-thumb");
-        bottom_entityEl.append(subEnt);
-    }
-    image_groups.position_shift(1, bottom_entityEl);
+    image_groups.write_to_storage();
 }
 
+/*
+ * The ImageGroups object is takes the list of images
+ * then it provides a way of adding them with DOM and other useful features to
+ * provide a interface between the side scrollers and the thumb nail selectors
+ */
 class ImageGroups {
     constructor() {
         this.groups = null;
         this.group_size = 3;
         this.index = 0;
     }
+
+    /*
+     * For unestablished sessions this splits the images into groups making
+     * them more managable to work with
+     */
     create_groups(images) {
         let chuncks = this.group_size
         this.groups = images.map(function(e,i){
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
         }).filter(function(e){ return e; });
     }
-    set_group(parent) {
-        let group = this.groups[this.index];
+
+    /*
+     * This function takes a id tag and appends the next possible image group
+     * as children
+     * @param parent The image tag used to help
+     */
+    set_group_next(parent) {
         var linkEl = document.querySelector(parent);
+        let index = this.index;
+
+        this.purge_children(linkEl);
+
+        if (index >= this.groups.length) {
+            console.warn("Requesting more than needed");
+            this.index += 1; // To keep constitancy
+            return; // Do nothing if there is a lone group
+        }
+        let group = this.groups[this.index];
         group.map(function (e) {
             let subEnt = document.createElement("a-entity");
             subEnt.setAttribute("template","src: #link");
@@ -161,32 +172,58 @@ class ImageGroups {
             linkEl.append(subEnt);
         });
 
+        this.position_shift(group.length, linkEl);
+
         this.index += 1;
     }
+
+    /*
+     * Remove all children of html node to make way for new children
+     * @param parent The parent being purged
+     */
+    purge_children(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
+
+    /*
+     * Since groups may be of un-natural size there may be a need repostioning
+     * 3 elements is the default postion at x=-1.5
+     * 2 elements staggers the images at x=-1
+     * 1 element is placed in same spot as middle image for 3 (x=-0.25)
+     *
+     * @param size Is the postion placement value
+     * @param The a-entity being modified
+     */
     position_shift(size, linkEl) {
         // top for 3: "-1.5 1.5 -4"
         // bot for 3: "-1.5 0.25 -4"
-        console.log("-----------------------------");
-        console.log(linkEl);
         try {
             var pos = linkEl.getAttribute('position');
         } catch(e) {
             console.log("ERROR: Unsuccesful in getting position attribute");
             return;
         }
+        console.log(pos);
         if(size > 3 || size < 0) {
             throw new Error("Invalid size argument in shifting postion: Must be \
             between 1 and 3");
         } else if (size == 3) {
-            pos['x'] = -1.5
+            pos['x'] = -1.5;
         } else if (size == 2) {
-            pos['x'] = -1
+            pos['x'] = -1;
         } else if (size == 1) {
-            pos['x'] = -0.25
+            pos['x'] = -0.25;
         }
-        console.log(pos);
         linkEl.setAttribute('position', pos);
     }
+
+    /*
+     * Since the function creating using this class can be from a series of
+     * callbacks. I am writing this object to session storage to be pulled out
+     * for later use.
+     */
     write_to_storage() {
         if (sessionStorage.images == null) {
             var group = {}
@@ -206,6 +243,12 @@ class ImageGroups {
             );
         }
     }
+
+    /*
+     * After this object has been written to session storage we need a way
+     * to pull out the storage, parse it and reupload it to the new instance
+     * of the class.
+     */
     pull_from_storage() {
         var image_object = JSON.parse(sessionStorage.images);
 
@@ -216,11 +259,37 @@ class ImageGroups {
         this.index = image_object['index'];
         this.group_size = image_object['group_size'];
     }
+
+    // Getters
+
+    /*
+     * Getters to get the groups 2D array
+     */
     get_groups() {
         return this.groups;
     }
+
+    /*
+     * Getter for the index
+     */
     get_index() {
         return this.index;
+    }
+
+    /*
+     * Getter for the size
+     */
+    get_size() {
+        return this.groups.length;
+    }
+
+    // Setter(s)
+
+    /*
+     * Setter for the index
+     */
+    set_index(new_index) {
+        this.index = new_index;
     }
 }
 
