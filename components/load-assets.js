@@ -115,55 +115,114 @@ function getRandomInt(min,max) {
  * @param Array ids An array of all the image names to be placed
  */
 function addEntities(ids) {
-    var group_size = 3;
-    var groups = ids.map(function(e,i){
-        return i%group_size===0 ? ids.slice(i,i+group_size) : null;
-    }).filter(function(e){ return e; });
-
-    var image_groups = new ImageGroups(groups);
-
-    var init_groups = image_groups.get_next_group();
-
-    // Save data into this session
-    sessionStorage.setItem('images', image_groups);
-
+    var image_groups = new ImageGroups();
+    image_groups.create_groups(ids);
 
     var top_entityEl = document.querySelector("a-entity#links_top");
-    for(var i=0; i < init_groups[0]; i++) {
+    for(var i=0; i < 3; i++) {
         let subEnt = document.createElement("a-entity");
         subEnt.setAttribute("template","src: #link");
         subEnt.setAttribute("data-src", "#" + ids[i]);
         subEnt.setAttribute("data-thumb", "#" + ids[i] + "-thumb");
         top_entityEl.append(subEnt);
     }
+
     var bottom_entityEl = document.querySelector("a-entity#links_bottom");
-    for(var i=3; i < init_groups[1]; i++) {
+    for(var i=3; i < 4; i++) {
         let subEnt = document.createElement("a-entity");
         subEnt.setAttribute("template","src: #link");
         subEnt.setAttribute("data-src", "#" + ids[i]);
         subEnt.setAttribute("data-thumb", "#" + ids[i] + "-thumb");
         bottom_entityEl.append(subEnt);
     }
+    image_groups.position_shift(1, bottom_entityEl);
 }
 
 class ImageGroups {
-    constructor(groups) {
-        var group_size = 2;
+    constructor() {
+        this.groups = null;
+        this.group_size = 3;
         this.index = 0;
-        this.clusters = groups.map(function (e,i) {
-            return i%group_size===0 ? groups.slive(i,i+group_size) : null;
+    }
+    create_groups(images) {
+        let chuncks = this.group_size
+        this.groups = images.map(function(e,i){
+            return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
         }).filter(function(e){ return e; });
     }
-    get_next_group() {
-        let group = this.clusters[this.index];
+    set_group(parent) {
+        let group = this.groups[this.index];
+        var linkEl = document.querySelector(parent);
+        group.map(function (e) {
+            let subEnt = document.createElement("a-entity");
+            subEnt.setAttribute("template","src: #link");
+            subEnt.setAttribute("data-src", "#" + e);
+            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
+            linkEl.append(subEnt);
+        });
+
         this.index += 1;
-        return group
     }
-    get_clusters() {
-        return this.clusters;
+    position_shift(size, linkEl) {
+        // top for 3: "-1.5 1.5 -4"
+        // bot for 3: "-1.5 0.25 -4"
+        console.log("-----------------------------");
+        console.log(linkEl);
+        try {
+            var pos = linkEl.getAttribute('position');
+        } catch(e) {
+            console.log("ERROR: Unsuccesful in getting position attribute");
+            return;
+        }
+        if(size > 3 || size < 0) {
+            throw new Error("Invalid size argument in shifting postion: Must be \
+            between 1 and 3");
+        } else if (size == 3) {
+            pos['x'] = -1.5
+        } else if (size == 2) {
+            pos['x'] = -1
+        } else if (size == 1) {
+            pos['x'] = -0.25
+        }
+        console.log(pos);
+        linkEl.setAttribute('position', pos);
+    }
+    write_to_storage() {
+        if (sessionStorage.images == null) {
+            var group = {}
+            this.groups.map(function(e,i) {
+                group[i] = e;
+            });
+
+            var image_object = {
+                'groups': group,
+                'index': this.index,
+                'group_size': this.group_size
+            };
+
+            sessionStorage.setItem(
+                'images',
+                JSON.stringify(image_object)
+            );
+        }
+    }
+    pull_from_storage() {
+        var image_object = JSON.parse(sessionStorage.images);
+
+        this.groups = Object.keys(image_object['groups']).map(function (key) {
+            return image_object['groups'][key];
+        });
+
+        this.index = image_object['index'];
+        this.group_size = image_object['group_size'];
+    }
+    get_groups() {
+        return this.groups;
+    }
+    get_index() {
+        return this.index;
     }
 }
-
 
 // Call makeAjaxCall which will cascade into the other functions
 makeAjaxCall(folder, extractAjaxData);
