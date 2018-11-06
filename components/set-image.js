@@ -1,8 +1,8 @@
 /* global AFRAME */
 
 /**
- * Component that listens to an event, fades out an entity, swaps the texture, and fades it
- * back in.
+ * Component that listens to an event, fades out an entity, swaps the texture,
+ * and fades it back in.
  */
 AFRAME.registerComponent('set-image', {
   schema: {
