@@ -116,6 +116,7 @@ function getRandomInt(min,max) {
  * @param Array ids An array of all the image names to be placed
  */
 function addEntities(ids) {
+
     var image_groups = new ImageGroups();
     image_groups.create_groups(ids);
 
