@@ -56,11 +56,7 @@ function extractAjaxData(data, folder) {
     });
 
     // Create the image components
-    addImages(images, ids, folder);
-
-    // Set the default background as random
-    let rand = getRandomInt(0, ids.length);
-    establishSky(ids[rand]);
+    addImages(images, ids, folder, establishSky);
 
     // Add the interactable enitities
     addEntities(ids);
@@ -72,7 +68,7 @@ function extractAjaxData(data, folder) {
  * @param Array  ids    An array of all the names of the images
  * @param String folder The URI to the folder
  */
-function addImages(images, ids, folder) {
+function addImages(images, ids, folder, callback) {
     var divEl = document.querySelector("div#images");
     for(var i=0; i < images.length; i++) {
         // Create image tags
@@ -89,6 +85,9 @@ function addImages(images, ids, folder) {
         imgThumb.setAttribute('src', folder + images[i]);
         divEl.append(imgThumb);
     }
+
+    let rand = getRandomInt(0, ids.length);
+    callback(ids[rand]);
 }
 
 /**
@@ -96,8 +95,10 @@ function addImages(images, ids, folder) {
  * @param  String image The image to set as the default sky
  */
 function establishSky(image) {
-    var skyEl = document.querySelector("a-sky");
-    skyEl.setAttribute("src", "#"+image);
+    window.onload = function () {
+        var skyEl = document.querySelector("a-sky");
+        skyEl.setAttribute("src", "#"+image);
+    }
 }
 
 /**
@@ -156,34 +157,48 @@ class ImageGroups {
         var linkEl = document.querySelector(parent);
         let index = this.index;
 
-        this.purge_children(linkEl);
-
         if (index >= this.groups.length) {
             console.warn("Requesting more than needed");
             this.index += 1; // To keep constitancy
             return; // Do nothing if there is a lone group
         }
         let group = this.groups[this.index];
-        group.map(function (e) {
-            let subEnt = document.createElement("a-entity");
-            subEnt.setAttribute("template","src: #link");
-            subEnt.setAttribute("data-src", "#" + e);
-            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
-            linkEl.append(subEnt);
-        });
+
+        if(linkEl.childNodes.length == 0) {
+            console.log("Establishing elements");
+            this.init_group_next(linkEl, group);
+        } else {
+            console.log("Updating elements");
+            this.update_group_next(linkEl, group);
+        }
 
         this.position_shift(group.length, linkEl);
 
         this.index += 1;
     }
 
-    /*
-     * Remove all children of html node to make way for new children
-     * @param parent The parent being purged
-     */
-    purge_children(parent) {
-        while (parent.firstChild) {
-            parent.removeChild(parent.firstChild);
+    init_group_next(linkEl, group) {
+        group.map(function (e) {
+            let subEnt = document.createElement("a-entity");
+            subEnt.setAttribute("template","src: #link");
+            subEnt.setAttribute("data-src", "#" + e);
+            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
+            subEnt.setAttribute("visible", true);
+            linkEl.append(subEnt);
+        });
+    }
+
+    update_group_next(linkEl, group) {
+        var children = linkEl.childNodes;
+
+        for(var i=0; i < group.length; i++) {
+            children[i].setAttribute("data-src", "#" + group[i]);
+            children[i].setAttribute("data-thumb", "#" + group[i] + "-thumb");
+            children[i].setAttribute("visible", true);
+        }
+
+        for(var j=children.length-1; j >= group.length; j--) {
+            children[j].setAttribute("visible", false);
         }
     }
 
@@ -205,16 +220,30 @@ class ImageGroups {
             console.log("ERROR: Unsuccesful in getting position attribute");
             return;
         }
-        console.log(pos);
-        if(size > 3 || size < 0) {
-            throw new Error("Invalid size argument in shifting postion: Must be \
-            between 1 and 3");
-        } else if (size == 3) {
-            pos['x'] = -1.5;
-        } else if (size == 2) {
-            pos['x'] = -1;
-        } else if (size == 1) {
-            pos['x'] = -0.25;
+        if (typeof(pos) == "string") {
+            pos = pos.split(" ");
+            if(size > 3 || size < 0) {
+                throw new Error("Invalid size argument in shifting postion: Must be \
+                between 1 and 3");
+            } else if (size == 3) {
+                pos[0] = "-1.5";
+            } else if (size == 2) {
+                pos[0] = "-1";
+            } else if (size == 1) {
+                pos[0] = "-0.25";
+            }
+            pos = pos.join(" ");
+        } else {
+            if(size > 3 || size < 0) {
+                throw new Error("Invalid size argument in shifting postion: Must be \
+                between 1 and 3");
+            } else if (size == 3) {
+                pos['x'] = -1.5;
+            } else if (size == 2) {
+                pos['x'] = -1;
+            } else if (size == 1) {
+                pos['x'] = -0.25;
+            }
         }
         linkEl.setAttribute('position', pos);
     }
@@ -225,23 +254,21 @@ class ImageGroups {
      * for later use.
      */
     write_to_storage() {
-        if (sessionStorage.images == null) {
-            var group = {}
-            this.groups.map(function(e,i) {
-                group[i] = e;
-            });
+        var group = {}
+        this.groups.map(function(e,i) {
+            group[i] = e;
+        });
 
-            var image_object = {
-                'groups': group,
-                'index': this.index,
-                'group_size': this.group_size
-            };
+        var image_object = {
+            'groups': group,
+            'index': this.index,
+            'group_size': this.group_size
+        };
 
-            sessionStorage.setItem(
-                'images',
-                JSON.stringify(image_object)
-            );
-        }
+        sessionStorage.setItem(
+            'images',
+            JSON.stringify(image_object)
+        );
     }
 
     /*
