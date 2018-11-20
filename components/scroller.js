@@ -7,18 +7,6 @@ AFRAME.registerComponent('scroll-left', {
         on: {type: 'string'}
     },
 
-    init: function () {
-        var data = this.data
-        var el = this.el;
-
-        // Get the ImageGroup Object from session storage
-
-        var image_groups = new ImageGroups();
-        image_groups.pull_from_storage();
-
-        var index = image_groups.get_index();
-    },
-
     update: function () {
         var data = this.data;
         var el = this.el;
@@ -46,18 +34,6 @@ AFRAME.registerComponent('scroll-left', {
 AFRAME.registerComponent('scroll-right', {
     schema: {
         on: {type: 'string'}
-    },
-
-    init: function () {
-        var data = this.data;
-        var el = this.el;
-
-        var image_groups = new ImageGroups();
-        image_groups.pull_from_storage();
-
-        var index = image_groups.get_index();
-        var size = image_groups.get_size();
-
     },
 
     update: function() {
