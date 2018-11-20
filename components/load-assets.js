@@ -133,6 +133,7 @@ function addEntities(ids) {
  */
 class ImageGroups {
     constructor() {
+        this.image = null;
         this.groups = null;
         this.group_size = 3;
         this.index = 0;
@@ -143,6 +144,8 @@ class ImageGroups {
      * them more managable to work with
      */
     create_groups(images) {
+        this.images = images;
+
         let chuncks = this.group_size
         this.groups = images.map(function(e,i){
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
@@ -196,6 +199,11 @@ class ImageGroups {
             children[i].setAttribute("data-src", "#" + group[i]);
             children[i].setAttribute("data-thumb", "#" + group[i] + "-thumb");
             children[i].setAttribute("visible", true);
+            let comp = children[i].childNodes[0];
+
+            comp.setAttribute("material", "src", "images/" + group[i] + ".jpg");
+
+            let set_image = comp.getAttribute("set-image");
         }
 
         for(var j=children.length-1; j >= group.length; j--) {
