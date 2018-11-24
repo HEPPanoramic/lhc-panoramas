@@ -150,6 +150,46 @@ class ImageGroups {
         this.groups = images.map(function(e,i){
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
         }).filter(function(e){ return e; });
+
+        var image_thumbs = document.querySelector("image_thumbs");
+
+        this.groups.map( function (e, i) {
+            // top for 3: "-1.5 1.5 -4"
+            // bot for 3: "-1.5 0.25 -4"
+            var groupEl = document.createElement("a-entity");
+            groupEl.setAttribute("id", "group" + i);
+
+            var layoutObj = JSON.stringify({
+                "type": "line",
+                "margin": 1.25
+            });
+            groupEl.setAttribute("layout", layoutObj);
+
+            var posObj = {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            };
+
+            if (i%2 == 0) {
+                // If it is even then it is a top group
+                posObj['y'] = 1.5;
+                posObj['z'] = -4;
+            } else {
+                // If it is odd then it goes on the bottom
+                posObj['y'] = 0.25;
+                posObj['z'] = -4;
+            }
+
+            posObj = this.position_shift(e.length, posObj);
+
+            groupEl.setAttribute("position", posObj);
+
+            e.map( function (e, i) {
+                var imgEl = document.createElement("a-entity");
+
+            });
+        });
     }
 
     /*
@@ -220,41 +260,20 @@ class ImageGroups {
      * @param size Is the postion placement value
      * @param The a-entity being modified
      */
-    position_shift(size, linkEl) {
+    position_shift(size, pos) {
         // top for 3: "-1.5 1.5 -4"
         // bot for 3: "-1.5 0.25 -4"
-        try {
-            var pos = linkEl.getAttribute('position');
-        } catch(e) {
-            console.log("ERROR: Unsuccesful in getting position attribute");
-            return;
+        if(size > 3 || size < 0) {
+            throw new Error("Invalid size argument in shifting postion: Must be \
+            between 1 and 3");
+        } else if (size == 3) {
+            pos['x'] = -1.5;
+        } else if (size == 2) {
+            pos['x'] = -1;
+        } else if (size == 1) {
+            pos['x'] = -0.25;
         }
-        if (typeof(pos) == "string") {
-            pos = pos.split(" ");
-            if(size > 3 || size < 0) {
-                throw new Error("Invalid size argument in shifting postion: Must be \
-                between 1 and 3");
-            } else if (size == 3) {
-                pos[0] = "-1.5";
-            } else if (size == 2) {
-                pos[0] = "-1";
-            } else if (size == 1) {
-                pos[0] = "-0.25";
-            }
-            pos = pos.join(" ");
-        } else {
-            if(size > 3 || size < 0) {
-                throw new Error("Invalid size argument in shifting postion: Must be \
-                between 1 and 3");
-            } else if (size == 3) {
-                pos['x'] = -1.5;
-            } else if (size == 2) {
-                pos['x'] = -1;
-            } else if (size == 1) {
-                pos['x'] = -0.25;
-            }
-        }
-        linkEl.setAttribute('position', pos);
+        return pos;
     }
 
     /*
