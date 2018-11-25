@@ -153,7 +153,7 @@ class ImageGroups {
 
         var image_thumbs = document.querySelector("image_thumbs");
 
-        this.groups.map( function (e, i) {
+        this.groups.map( function (e, i, position_shift) {
             // top for 3: "-1.5 1.5 -4"
             // bot for 3: "-1.5 0.25 -4"
             var groupEl = document.createElement("a-entity");
