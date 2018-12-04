@@ -11,121 +11,6 @@ AFRAME.registerComponent('load_assets', {
 var images = [];
 var folder = 'images/';
 
-/**
- * A AJAX function that plunges into the a folder to extract the image
- * filenames.
- * @param  String     url        uri to the folder to extract images
- * @param  {Function} callback   The  function that is used to process the data
- */
-function makeAjaxCall(url, callback){
-   var xhr = new XMLHttpRequest();
-   xhr.open("GET", url, true);
-   xhr.send();
-   xhr.onreadystatechange = function(){
-     if (xhr.readyState === 4){
-        if (xhr.status === 200){
-           console.log("xhr done successfully");
-           var resp = xhr.responseText;
-           callback(resp, url);
-        } else {
-           console.log("xhr failed");
-        }
-     } else {
-        console.log("xhr processing going on");
-     }
-   }
-   console.log("request sent succesfully");
-}
-
-/**
- * The default callback function to parse the directory of the XML response
- * from AJAX
- * @param  String data   The XML response in string form to be parsed
- * @param  String folder The URI to the folder
- */
-function extractAjaxData(data, folder) {
-    var images = [];
-    var ids = [];
-    $(data).find("a").attr("href", function(i, val) {
-        if(val.match(/\.(jpe?g|png|gif)$/)) {
-            images.push(val);
-
-            var id = val.split('.')[0];
-            ids.push(id);
-        }
-    });
-
-    // Create the image components
-    addImages(images, ids, folder, establishSky);
-
-    // Add the interactable enitities
-    addEntities(ids);
-}
-
-/**
- * Adds the image entities to be later accessed by other enities
- * @param Array  images An array of all the image filenames
- * @param Array  ids    An array of all the names of the images
- * @param String folder The URI to the folder
- */
-function addImages(images, ids, folder, callback) {
-    var divEl = document.querySelector("div#images");
-    for(var i=0; i < images.length; i++) {
-        // Create image tags
-        let imgEl = document.createElement("img");
-        imgEl.setAttribute('id', ids[i]);
-        imgEl.setAttribute('crossorigin', 'anonymous');
-        imgEl.setAttribute('src', folder + images[i]);
-        divEl.appendChild(imgEl);
-
-        // Create the image thumbnails
-        let imgThumb = document.createElement('img');
-        imgThumb.setAttribute('id', ids[i] + '-thumb');
-        imgThumb.setAttribute('crossorigin', 'anonymous');
-        imgThumb.setAttribute('src', folder + images[i]);
-        divEl.append(imgThumb);
-    }
-
-    let rand = getRandomInt(0, ids.length);
-    callback(ids[rand]);
-}
-
-/**
- * Sets the default panorma image for the initial  website
- * @param  String image The image to set as the default sky
- */
-function establishSky(image) {
-    window.onload = function () {
-        var skyEl = document.querySelector("a-sky");
-        skyEl.setAttribute("src", "#"+image);
-    }
-}
-
-/**
- * Returns a random value between the range min and max
- * @param  int min Lower bound of the random range
- * @param  int max Upper bound of the random range
- * @return int     The random integer
- */
-function getRandomInt(min,max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-/**
- * A adds the interactable entities that consit of a thumb nail
- * @param Array ids An array of all the image names to be placed
- */
-function addEntities(ids) {
-
-    var image_groups = new ImageGroups();
-    image_groups.create_groups(ids);
-
-    image_groups.set_group_next("a-entity#links_top");
-    image_groups.set_group_next("a-entity#links_bottom");
-
-    image_groups.write_to_storage();
-}
-
 /*
  * The ImageGroups object is takes the list of images
  * then it provides a way of adding them with DOM and other useful features to
@@ -147,39 +32,6 @@ class ImageGroups {
         this.groups = images.map(function(e,i){
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
         }).filter(function(e){ return e; });
-
-        for(var i=0; i < this.groups.length; i++) {
-            if (i%2 == 0) {
-                console.log("Linking to top element");
-                var linkEl = document.querySelector("#links_top");
-            } else {
-                console.log("Linking to bottom element")
-                var linkEl = document.querySelector("#links_bottom");
-            }
-
-            var groupEl = document.createElement("a-entity");
-            groupEl.setAttribute("id", "group" + i);
-            groupEl.setAttribute("layout", JSON.stringify({
-                "type": "line",
-                "margin": 1.25
-            }));
-
-            if(i != 0) {
-                groupEl.setAttribute("visible", false);
-            }
-
-            this.groups[i].map(function (e, i) {
-                var img = document.createElement("a-entity");
-                img.setAttribute("template", JSON.stringify({
-                    "src": "#link"
-                }));
-                img.setAttribute("data-src", "#" + e);
-                img.setAttribute("data-thumb", "#" + e + "-thumb");
-                groupEl.appendChild(img);
-            });
-
-            linkEl.appendChild(groupEl);
-        }
     }
 
     /*
@@ -245,20 +97,41 @@ class ImageGroups {
      * @param size Is the postion placement value
      * @param The a-entity being modified
      */
-    position_shift(size, pos) {
+    position_shift(size, linkEl) {
         // top for 3: "-1.5 1.5 -4"
         // bot for 3: "-1.5 0.25 -4"
-        if(size > 3 || size < 0) {
-            throw new Error("Invalid size argument in shifting postion: Must be \
-            between 1 and 3");
-        } else if (size == 3) {
-            pos['x'] = -1.5;
-        } else if (size == 2) {
-            pos['x'] = -1;
-        } else if (size == 1) {
-            pos['x'] = -0.25;
+        try {
+            var pos = linkEl.getAttribute('position');
+        } catch(e) {
+            console.log("ERROR: Unsuccesful in getting position attribute");
+            return;
         }
-        return pos;
+        if (typeof(pos) == "string") {
+            pos = pos.split(" ");
+            if(size > 3 || size < 0) {
+                throw new Error("Invalid size argument in shifting postion: Must be \
+                between 1 and 3");
+            } else if (size == 3) {
+                pos[0] = "-1.5";
+            } else if (size == 2) {
+                pos[0] = "-1";
+            } else if (size == 1) {
+                pos[0] = "-0.25";
+            }
+            pos = pos.join(" ");
+        } else {
+            if(size > 3 || size < 0) {
+                throw new Error("Invalid size argument in shifting postion: Must be \
+                between 1 and 3");
+            } else if (size == 3) {
+                pos['x'] = -1.5;
+            } else if (size == 2) {
+                pos['x'] = -1;
+            } else if (size == 1) {
+                pos['x'] = -0.25;
+            }
+        }
+        linkEl.setAttribute('position', pos);
     }
 
     /*
