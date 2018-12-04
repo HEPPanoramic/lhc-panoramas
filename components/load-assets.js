@@ -133,7 +133,6 @@ function addEntities(ids) {
  */
 class ImageGroups {
     constructor() {
-        this.image = null;
         this.groups = null;
         this.group_size = 3;
         this.index = 0;
@@ -144,8 +143,6 @@ class ImageGroups {
      * them more managable to work with
      */
     create_groups(images) {
-        this.images = images;
-
         let chuncks = this.group_size
         this.groups = images.map(function(e,i){
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
@@ -190,6 +187,7 @@ class ImageGroups {
      * as children
      * @param parent The image tag used to help
      */
+<<<<<<< HEAD
     set_group_next() {
         console.warn("Function not implemented");
         // let index = this.index;
@@ -201,6 +199,55 @@ class ImageGroups {
         // } else {
         //     console.warn("WARNING: Accessing element out of range");
         // }
+=======
+    set_group_next(parent) {
+        var linkEl = document.querySelector(parent);
+        let index = this.index;
+
+        if (index >= this.groups.length) {
+            console.warn("Requesting more than needed");
+            this.index += 1; // To keep constitancy
+            return; // Do nothing if there is a lone group
+        }
+        let group = this.groups[this.index];
+
+        if(linkEl.childNodes.length == 0) {
+            console.log("Establishing elements");
+            this.init_group_next(linkEl, group);
+        } else {
+            console.log("Updating elements");
+            this.update_group_next(linkEl, group);
+        }
+
+        this.position_shift(group.length, linkEl);
+
+        this.index += 1;
+    }
+
+    init_group_next(linkEl, group) {
+        group.map(function (e) {
+            let subEnt = document.createElement("a-entity");
+            subEnt.setAttribute("template","src: #link");
+            subEnt.setAttribute("data-src", "#" + e);
+            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
+            subEnt.setAttribute("visible", true);
+            linkEl.append(subEnt);
+        });
+    }
+
+    update_group_next(linkEl, group) {
+        var children = linkEl.childNodes;
+
+        for(var i=0; i < group.length; i++) {
+            children[i].setAttribute("data-src", "#" + group[i]);
+            children[i].setAttribute("data-thumb", "#" + group[i] + "-thumb");
+            children[i].setAttribute("visible", true);
+        }
+
+        for(var j=children.length-1; j >= group.length; j--) {
+            children[j].setAttribute("visible", false);
+        }
+>>>>>>> 511c048dc57516aecf11d9ca9f3969c3e65ae897
     }
 
     /*
