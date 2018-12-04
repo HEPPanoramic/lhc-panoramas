@@ -187,19 +187,6 @@ class ImageGroups {
      * as children
      * @param parent The image tag used to help
      */
-<<<<<<< HEAD
-    set_group_next() {
-        console.warn("Function not implemented");
-        // let index = this.index;
-        //
-        // if (index < this.group.length) {
-        //     document.querySelector("#group" + index).setAttribute("visible", true);
-        //
-        //     this.index += 1;
-        // } else {
-        //     console.warn("WARNING: Accessing element out of range");
-        // }
-=======
     set_group_next(parent) {
         var linkEl = document.querySelector(parent);
         let index = this.index;
@@ -247,7 +234,6 @@ class ImageGroups {
         for(var j=children.length-1; j >= group.length; j--) {
             children[j].setAttribute("visible", false);
         }
->>>>>>> 511c048dc57516aecf11d9ca9f3969c3e65ae897
     }
 
     /*
