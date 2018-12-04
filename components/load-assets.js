@@ -151,45 +151,38 @@ class ImageGroups {
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
         }).filter(function(e){ return e; });
 
-        var image_thumbs = document.querySelector("image_thumbs");
-
-        this.groups.map( function (e, i, position_shift) {
-            // top for 3: "-1.5 1.5 -4"
-            // bot for 3: "-1.5 0.25 -4"
-            var groupEl = document.createElement("a-entity");
-            groupEl.setAttribute("id", "group" + i);
-
-            var layoutObj = JSON.stringify({
-                "type": "line",
-                "margin": 1.25
-            });
-            groupEl.setAttribute("layout", layoutObj);
-
-            var posObj = {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            };
-
+        for(var i=0; i < this.groups.length; i++) {
             if (i%2 == 0) {
-                // If it is even then it is a top group
-                posObj['y'] = 1.5;
-                posObj['z'] = -4;
+                console.log("Linking to top element");
+                var linkEl = document.querySelector("#links_top");
             } else {
-                // If it is odd then it goes on the bottom
-                posObj['y'] = 0.25;
-                posObj['z'] = -4;
+                console.log("Linking to bottom element")
+                var linkEl = document.querySelector("#links_bottom");
             }
 
-            posObj = this.position_shift(e.length, posObj);
+            var groupEl = document.createElement("a-entity");
+            groupEl.setAttribute("id", "group" + i);
+            groupEl.setAttribute("layout", JSON.stringify({
+                "type": "line",
+                "margin": 1.25
+            }));
 
-            groupEl.setAttribute("position", posObj);
+            if(i != 0) {
+                groupEl.setAttribute("visible", false);
+            }
 
-            e.map( function (e, i) {
-                var imgEl = document.createElement("a-entity");
-
+            this.groups[i].map(function (e, i) {
+                var img = document.createElement("a-entity");
+                img.setAttribute("template", JSON.stringify({
+                    "src": "#link"
+                }));
+                img.setAttribute("data-src", "#" + e);
+                img.setAttribute("data-thumb", "#" + e + "-thumb");
+                groupEl.appendChild(img);
             });
-        });
+
+            linkEl.appendChild(groupEl);
+        }
     }
 
     /*
@@ -197,58 +190,17 @@ class ImageGroups {
      * as children
      * @param parent The image tag used to help
      */
-    set_group_next(parent) {
-        var linkEl = document.querySelector(parent);
-        let index = this.index;
-
-        if (index >= this.groups.length) {
-            console.warn("Requesting more than needed");
-            this.index += 1; // To keep constitancy
-            return; // Do nothing if there is a lone group
-        }
-        let group = this.groups[this.index];
-
-        if(linkEl.childNodes.length == 0) {
-            console.log("Establishing elements");
-            this.init_group_next(linkEl, group);
-        } else {
-            console.log("Updating elements");
-            this.update_group_next(linkEl, group);
-        }
-
-        this.position_shift(group.length, linkEl);
-
-        this.index += 1;
-    }
-
-    init_group_next(linkEl, group) {
-        group.map(function (e) {
-            let subEnt = document.createElement("a-entity");
-            subEnt.setAttribute("template","src: #link");
-            subEnt.setAttribute("data-src", "#" + e);
-            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
-            subEnt.setAttribute("visible", true);
-            linkEl.append(subEnt);
-        });
-    }
-
-    update_group_next(linkEl, group) {
-        var children = linkEl.childNodes;
-
-        for(var i=0; i < group.length; i++) {
-            children[i].setAttribute("data-src", "#" + group[i]);
-            children[i].setAttribute("data-thumb", "#" + group[i] + "-thumb");
-            children[i].setAttribute("visible", true);
-            let comp = children[i].childNodes[0];
-
-            comp.setAttribute("material", "src", "images/" + group[i] + ".jpg");
-
-            let set_image = comp.getAttribute("set-image");
-        }
-
-        for(var j=children.length-1; j >= group.length; j--) {
-            children[j].setAttribute("visible", false);
-        }
+    set_group_next() {
+        console.warn("Function not implemented");
+        // let index = this.index;
+        //
+        // if (index < this.group.length) {
+        //     document.querySelector("#group" + index).setAttribute("visible", true);
+        //
+        //     this.index += 1;
+        // } else {
+        //     console.warn("WARNING: Accessing element out of range");
+        // }
     }
 
     /*
