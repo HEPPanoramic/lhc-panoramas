@@ -43,9 +43,7 @@ AFRAME.registerComponent('scroll-right', {
 
             var size = image_groups.get_size();
             var index = image_groups.get_index();
-
-            console.log(size);
-            console.log(index);
+            
             if (index <= size) {
 
                 image_groups.set_group_next();

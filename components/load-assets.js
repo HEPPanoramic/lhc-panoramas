@@ -136,6 +136,7 @@ class ImageGroups {
         this.group_size = 3;
         this.size = 0;
         this.index = 0;
+        this.width = 3.75;
     }
 
     /*
@@ -168,6 +169,18 @@ class ImageGroups {
         this.size = j;
     }
 
+    init_group(linkEl, group, index) {
+        group.map(function (e) {
+            let subEnt = document.createElement("a-entity");
+            subEnt.setAttribute("class", "group" + index);
+            subEnt.setAttribute("template","src: #link");
+            subEnt.setAttribute("data-src", "#" + e);
+            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
+            subEnt.setAttribute("visible", false);
+            linkEl.append(subEnt);
+        });
+    }
+
     /*
      * This function takes a id tag and appends the next possible image group
      * as children
@@ -194,6 +207,10 @@ class ImageGroups {
         // this.position_shift(group.length, linkEl);
 
         this.index = index;
+
+        if (index != 1) {
+            this.shift_position(index, true);
+        }
     }
 
     set_group_prev(parent) {
@@ -215,39 +232,51 @@ class ImageGroups {
         });
 
         this.index = index;
+        this.shift_position(index, false);
     }
 
-    init_group(linkEl, group, index) {
-        group.map(function (e) {
-            let subEnt = document.createElement("a-entity");
-            subEnt.setAttribute("class", "group" + index);
-            subEnt.setAttribute("template","src: #link");
-            subEnt.setAttribute("data-src", "#" + e);
-            subEnt.setAttribute("data-thumb", "#" + e + "-thumb");
-            subEnt.setAttribute("visible", false);
-            linkEl.append(subEnt);
-        });
-    }
-
-    moving_right(index, size) {
-        // top for 3: "-1.5 1.5 -4"
-        // bot for 3: "-1.5 0.25 -4"
+    shift_position(index, direction_left) {
         try {
-            var pos = linkEl.getAttribute('position');
+            var topPos = document.querySelector("#links_top").getAttribute("position");
+            var bottomPos = document.querySelector("#links_bottom").getAttribute("position");
         } catch(e) {
             console.log("ERROR: Unsuccesful in getting position attribute");
             return;
         }
 
-        if (typeof(pos) == "string") {
+        if (direction_left) {
+            document.querySelector("#links_top").setAttribute("position", this.moving_left(index, topPos));
+            document.querySelector("#links_bottom").setAttribute("position", this.moving_left(index, bottomPos));
+        } else {
+            document.querySelector("#links_top").setAttribute("position", this.moving_right(index, topPos));
+            document.querySelector("#links_bottom").setAttribute("position", this.moving_right(index, bottomPos));
+        }
+    }
+
+    moving_left(index, pos) {
+        if(typeof(pos) == "string") {
             pos = pos.split(" ");
-
-            pos[0] = parseFloat(pos) - 3.0 * (index - 1);
-
+            pos[0] = parseFloat(pos[0]) - this.width;
             pos = pos.join(" ");
         } else {
-            pos['x']
+            pos['x'] = pos['x'] - this.width;
         }
+        console.log(pos);
+        console.log("Index is: " + index)
+        return pos
+    }
+
+    moving_right(index, pos) {
+        if(typeof(pos) == "string") {
+            pos = pos.split(" ");
+            pos[0] = parseFloat(pos[0]) + this.width;
+            pos = pos.join(" ");
+        } else {
+            pos['x'] = pos['x'] + this.width;
+        }
+        console.log(pos);
+        console.log("Index is: " + index)
+        return pos
     }
 
     /*
