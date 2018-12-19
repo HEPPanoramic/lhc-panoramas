@@ -296,7 +296,7 @@ class ImageGroups {
      * Sifts the position (object or string) right (via addition)
      * @param pos Either a string or an JSON object to have the x value changed
      */
-    moving_right(index, pos) {
+    moving_right(pos) {
         if(typeof(pos) == "string") {
             pos = pos.split(" ");
             pos[0] = parseFloat(pos[0]) + this.width;
@@ -304,8 +304,6 @@ class ImageGroups {
         } else {
             pos['x'] = pos['x'] + this.width;
         }
-        console.log(pos);
-        console.log("Index is: " + index)
         return pos
     }
 
