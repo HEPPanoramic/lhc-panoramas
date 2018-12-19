@@ -132,19 +132,22 @@ function addEntities(ids) {
  */
 class ImageGroups {
     constructor() {
-        this.groups = null;
-        this.group_size = 3;
-        this.size = 0;
-        this.index = 0;
-        this.width = 3.75;
+        this.groups = null; // The clusters of images to be displayed
+        this.group_size = 3; // Always 3 in a cluster (or less)
+        this.size = 0; // Number of possible image displays
+        this.index = 0; // The current image display index
+        this.width = 3.75; // The ideal shift value
     }
 
     /*
      * For unestablished sessions this splits the images into groups making
      * them more managable to work with
+     * @param images An array to be spliced up and clustered into groups
      */
     create_groups(images) {
         let chuncks = this.group_size
+
+        // Split the array into clusters of three
         this.groups = images.map(function(e,i){
             return i%chuncks===0 ? images.slice(i,i+chuncks) : null;
         }).filter(function(e){ return e; });
@@ -152,23 +155,31 @@ class ImageGroups {
         var topEl = document.querySelector("#links_top");
         var bottomEl = document.querySelector("#links_bottom");
 
-        let j = 1;
+        let j = 1; // Var to offset the top and bottom clusters into groups
         for(var i=0; i < this.groups.length; i++) {
-            if (i%2 == 0) {
+            if (i%2 == 0) { // Go top
                 console.log(topEl);
                 this.init_group(topEl, this.groups[i], j);
-            } else {
+            } else { // Go bottom
                 console.log(bottomEl);
                 this.init_group(bottomEl, this.groups[i], j);
+                // Avoid the last grouping for constitency
                 if (i != this.groups.length-1) {
                     j += 1
                 }
             }
         }
 
+        // The number of possible displays
         this.size = j;
     }
 
+    /*
+     * This establishes all the current images (linked by there index)
+     * @param linkEl Whether the image group will be on top or bottom
+     * @param group The images being placed
+     * @param index The display configuration value
+     */
     init_group(linkEl, group, index) {
         group.map(function (e) {
             let subEnt = document.createElement("a-entity");
@@ -182,9 +193,7 @@ class ImageGroups {
     }
 
     /*
-     * This function takes a id tag and appends the next possible image group
-     * as children
-     * @param parent The image tag used to help
+     * Moves onto the next image configuration
      */
     set_group_next() {
         let index = this.index;
@@ -194,48 +203,63 @@ class ImageGroups {
             return; // Do nothing if there is a lone group
         }
 
+        // Remove current grouping
         $(".group" + index).each(function (i, e) {
             e.setAttribute("visible", false);
         });
 
+        // Increment the grouping index
         index += 1;
 
+        // Make the new group visible
         $(".group" + index).each(function (i, e) {
             e.setAttribute("visible", true);
         });
 
-        // this.position_shift(group.length, linkEl);
-
+        // Set global index
         this.index = index;
 
+        // As long as it is not the first grouping shift the position
         if (index != 1) {
-            this.shift_position(index, true);
+            this.shift_position(true);
         }
     }
 
-    set_group_prev(parent) {
+    /*
+     * Get the previous display configuration
+     */
+    set_group_prev() {
         let index = this.index;
 
+        // Can't go to a group cluster that is negative or does not exist
         if(index == 1) {
             console.warn("Requesting negative integer");
             return;
         }
 
+        // Remove current grouping
         $(".group" + index).each(function (i, e) {
             e.setAttribute("visible", false);
         });
 
         index -= 1;
 
+        // Make new grouping visible
         $(".group" + index).each(function (i, e) {
             e.setAttribute("visible", true);
         });
 
         this.index = index;
-        this.shift_position(index, false);
+        // Move it to the left to recenter it
+        this.shift_position(false);
     }
 
-    shift_position(index, direction_left) {
+    /*
+     * Takes the a direction and administers it to the correct position shifting
+     * function, it also retrieves the the html object
+     * @param direction_left Boolean if the direction is to the left (true) or right (false)
+     */
+    shift_position(direction_left) {
         try {
             var topPos = document.querySelector("#links_top").getAttribute("position");
             var bottomPos = document.querySelector("#links_bottom").getAttribute("position");
@@ -245,15 +269,19 @@ class ImageGroups {
         }
 
         if (direction_left) {
-            document.querySelector("#links_top").setAttribute("position", this.moving_left(index, topPos));
-            document.querySelector("#links_bottom").setAttribute("position", this.moving_left(index, bottomPos));
+            document.querySelector("#links_top").setAttribute("position", this.moving_left(topPos));
+            document.querySelector("#links_bottom").setAttribute("position", this.moving_left(bottomPos));
         } else {
-            document.querySelector("#links_top").setAttribute("position", this.moving_right(index, topPos));
-            document.querySelector("#links_bottom").setAttribute("position", this.moving_right(index, bottomPos));
+            document.querySelector("#links_top").setAttribute("position", this.moving_right(topPos));
+            document.querySelector("#links_bottom").setAttribute("position", this.moving_right(bottomPos));
         }
     }
 
-    moving_left(index, pos) {
+    /*
+     * Sifts the position (object or string) left (via subtraction)
+     * @param pos Either a string or an JSON object to have the x value changed
+     */
+    moving_left(pos) {
         if(typeof(pos) == "string") {
             pos = pos.split(" ");
             pos[0] = parseFloat(pos[0]) - this.width;
@@ -261,11 +289,13 @@ class ImageGroups {
         } else {
             pos['x'] = pos['x'] - this.width;
         }
-        console.log(pos);
-        console.log("Index is: " + index)
         return pos
     }
 
+    /*
+     * Sifts the position (object or string) right (via addition)
+     * @param pos Either a string or an JSON object to have the x value changed
+     */
     moving_right(index, pos) {
         if(typeof(pos) == "string") {
             pos = pos.split(" ");
@@ -277,52 +307,6 @@ class ImageGroups {
         console.log(pos);
         console.log("Index is: " + index)
         return pos
-    }
-
-    /*
-     * Since groups may be of un-natural size there may be a need repostioning
-     * 3 elements is the default postion at x=-1.5
-     * 2 elements staggers the images at x=-1
-     * 1 element is placed in same spot as middle image for 3 (x=-0.25)
-     *
-     * @param size Is the postion placement value
-     * @param The a-entity being modified
-     */
-    position_shift(size) {
-        // top for 3: "-1.5 1.5 -4"
-        // bot for 3: "-1.5 0.25 -4"
-        try {
-            var pos = linkEl.getAttribute('position');
-        } catch(e) {
-            console.log("ERROR: Unsuccesful in getting position attribute");
-            return;
-        }
-        if (typeof(pos) == "string") {
-            pos = pos.split(" ");
-            if(size > 3 || size < 0) {
-                throw new Error("Invalid size argument in shifting postion: Must be \
-                between 1 and 3");
-            } else if (size == 3) {
-                pos[0] = "-1.5";
-            } else if (size == 2) {
-                pos[0] = "-1";
-            } else if (size == 1) {
-                pos[0] = "-0.25";
-            }
-            pos = pos.join(" ");
-        } else {
-            if(size > 3 || size < 0) {
-                throw new Error("Invalid size argument in shifting postion: Must be \
-                between 1 and 3");
-            } else if (size == 3) {
-                pos['x'] = -1.5;
-            } else if (size == 2) {
-                pos['x'] = -1;
-            } else if (size == 1) {
-                pos['x'] = -0.25;
-            }
-        }
-        linkEl.setAttribute('position', pos);
     }
 
     /*
