@@ -13,9 +13,16 @@ AFRAME.registerComponent('view-icon', {
                              "#right-scroller",
                              "#title"];
             enitiesEl.map(function (e) {
-                var enity =  document.querySelector(e)
-                entity.setAttribute("visible", !(enity.getAttribute("visible")));
+                var entity =  document.querySelector(e);
+                entity.setAttribute("visible", !(entity.getAttribute("visible")));
             });
+
+            var viewer = document.querySelector(".viewer");
+            if (viewer.getAttribute("src") == "#view-icon") {
+                viewer.setAttribute("src", "#no-view-icon");
+            } else {
+                viewer.setAttribute("src", "#view-icon");
+            }
         });
     }
 });

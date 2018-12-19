@@ -16,6 +16,7 @@
 
         <script src="components/set-image.js"></script>
         <script src="components/scroller.js"></script>
+        <script src="components/view-icon.js"></script>
         <script src="components/load-assets.js"></script>
     </head>
     <body>
@@ -25,6 +26,7 @@
                     <img id="left-arrow" crossorigin="anonymous" src="assets/backward.png"/>
                     <img id="right-arrow" crossorigin="anonymous" src="assets/forward.png"/>
                     <img id="view-icon" crossorigin="anonymous" src="assets/view_icon.png"/>
+                    <img id="no-view-icon" crossorigin="anonymous" src="assets/no_view.png"/>
                 </div>
                 <script id="link" type="text/html">
                     <a-entity class="link"
@@ -71,6 +73,20 @@
                 event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
                 event-set__4="_event: mouseleave; scale: 1 1 1"
                 scroll-right="on: click">
+                </a-image>
+            </a-entity>
+
+            <!--View Icon-->
+            <a-entity id="view-icon" position="2 2.6 -5">
+                <a-image class="viewer"
+                src="#view-icon"
+                height="0.25" width="0.25"
+                material="opacity: 1.0; transparent: true"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                view-icon="on: click">
                 </a-image>
             </a-entity>
 
