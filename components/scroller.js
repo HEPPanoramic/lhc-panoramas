@@ -17,12 +17,9 @@ AFRAME.registerComponent('scroll-left', {
 
             var index = image_groups.get_index();
 
-            if (index > 2) {
-                // Revert the value of index
-                image_groups.set_index(index - 4);
+            if (index > 1) {
                 console.log("New index: " + image_groups.index);
-                image_groups.set_group_next("a-entity#links_top");
-                image_groups.set_group_next("a-entity#links_bottom");
+                image_groups.set_group_prev();
                 image_groups.write_to_storage();
             } else {
                 console.warn("Index out of range-left");
@@ -44,18 +41,18 @@ AFRAME.registerComponent('scroll-right', {
             var image_groups = new ImageGroups();
             image_groups.pull_from_storage();
 
-            var index = image_groups.get_index();
             var size = image_groups.get_size();
+            var index = image_groups.get_index();
+            
+            if (index <= size) {
 
-            if (index <= size - 2) {
-
-                image_groups.set_group_next("a-entity#links_top");
-                image_groups.set_group_next("a-entity#links_bottom");
-                console.log("Index change: " + image_groups.index);
+                image_groups.set_group_next();
                 image_groups.write_to_storage();
             } else {
                 console.warn("Index out of range-right");
             }
+
+            var index = image_groups.get_index();
         });
     }
 });
