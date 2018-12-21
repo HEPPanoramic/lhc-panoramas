@@ -9,7 +9,7 @@ AFRAME.registerComponent('load_assets', {
 });
 
 var images = [];
-var folder = 'images/';
+var folder = 'real_images/atlas_images/';
 
 /**
  * A AJAX function that plunges into the a folder to extract the image
