@@ -32,7 +32,7 @@ function makeAjaxCall(url, folder, callback){
                 callback(resp, folder);
             } else if (!url.match(/\.(html)$/)) {
                 console.log("processed failed trying with linking.html for jekyll")
-                makeAjaxCall(url + "linking.html", folder, callback);
+                makeAjaxCall(url + "listing.html", folder, callback);
             } else {
                 console.log("xhr failed");
             }
