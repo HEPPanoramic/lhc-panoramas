@@ -1,0 +1,16 @@
+<html>
+    <title>Directory listing for /images/</title>
+    <body>
+        <h2>Directory listing for /images/</h2>
+
+        <hr>
+        <ul>
+            {% for image in site.static_files %}
+                {% if image.path contains '/images/' %}
+                    <li><a href="{{ image.name }}">{{ image.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <hr>
+    <body>
+</html>
