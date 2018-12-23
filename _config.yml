@@ -1,2 +1,5 @@
-collections:
-    - images
+defaults:
+    - scrope:
+        path: "images"
+      values:
+        image: true

@@ -17,22 +17,25 @@ var folder = 'images/';
  * @param  String     url        uri to the folder to extract images
  * @param  {Function} callback   The  function that is used to process the data
  */
-function makeAjaxCall(url, callback){
+function makeAjaxCall(url, folder, callback){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.send();
+
+    console.log("------------------");
+    console.log(url);
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4){
             if (xhr.status === 200){
-               console.log("xhr done successfully");
-               var resp = xhr.responseText;
-               callback(resp, url);
+                console.log("xhr done successfully");
+                var resp = xhr.responseText;
+                callback(resp, folder);
+            } else if (!url.match(/\.(html)$/)) {
+                console.log("processed failed trying with linking.html for jekyll")
+                makeAjaxCall(url + "linking.html", folder, callback);
             } else {
-               console.log("xhr failed");
+                console.log("xhr failed");
             }
-        } else if(!val.match(/\.(html)$/)) {
-            console.log("need to use jekyll module");
-            makeAjaxCall(url+"default.html", callback);
         } else {
             console.log("xhr processing going on");
         }
@@ -385,4 +388,4 @@ class ImageGroups {
 }
 
 // Call makeAjaxCall which will cascade into the other functions
-makeAjaxCall(folder, extractAjaxData);
+makeAjaxCall(folder, folder, extractAjaxData);
