@@ -1,7 +1,3 @@
-/**
- * This is  just a standard AFRAME componet needed to help establish
- * concurrency with the DOM objects in the script
- */
 AFRAME.registerComponent('load_assets', {
     init: function () {
         console.log('I am ready!');
@@ -9,7 +5,6 @@ AFRAME.registerComponent('load_assets', {
 });
 
 var images = [];
-var folder = 'images/';
 
 /**
  * A AJAX function that plunges into the a folder to extract the image
@@ -92,7 +87,7 @@ function addImages(images, ids, folder, callback) {
         divEl.append(imgThumb);
     }
 
-    let rand = getRandomInt(0, ids.length);
+    let rand = getRandomInt(0, ids.length-1);
     callback(ids[rand]);
 }
 
@@ -386,6 +381,3 @@ class ImageGroups {
         this.index = new_index;
     }
 }
-
-// Call makeAjaxCall which will cascade into the other functions
-makeAjaxCall(folder, folder, extractAjaxData);

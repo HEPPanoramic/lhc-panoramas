@@ -12,15 +12,15 @@ AFRAME.registerComponent('scroll-left', {
         var el = this.el;
 
         el.addEventListener(data.on, function() {
-            var image_groups = new ImageGroups();
-            image_groups.pull_from_storage();
+            var image_groups_left = new ImageGroups();
+            image_groups_left.pull_from_storage();
 
-            var index = image_groups.get_index();
+            var index = image_groups_left.get_index();
 
             if (index > 1) {
-                console.log("New index: " + image_groups.index);
-                image_groups.set_group_prev();
-                image_groups.write_to_storage();
+                console.log("New index: " + image_groups_left.index);
+                image_groups_left.set_group_prev();
+                image_groups_left.write_to_storage();
             } else {
                 console.warn("Index out of range-left");
             }
@@ -38,21 +38,21 @@ AFRAME.registerComponent('scroll-right', {
         var el = this.el;
 
         el.addEventListener(data.on, function() {
-            var image_groups = new ImageGroups();
-            image_groups.pull_from_storage();
+            var image_groups_right = new ImageGroups();
+            image_groups_right.pull_from_storage();
 
-            var size = image_groups.get_size();
-            var index = image_groups.get_index();
-            
+            var size = image_groups_right.get_size();
+            var index = image_groups_right.get_index();
+
             if (index <= size) {
 
-                image_groups.set_group_next();
-                image_groups.write_to_storage();
+                image_groups_right.set_group_next();
+                image_groups_right.write_to_storage();
             } else {
                 console.warn("Index out of range-right");
             }
 
-            var index = image_groups.get_index();
+            var index = image_groups_right.get_index();
         });
     }
 });
