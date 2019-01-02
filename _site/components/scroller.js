@@ -57,9 +57,17 @@ AFRAME.registerComponent('scroll-right', {
     }
 });
 
+/*
+ * A back button to revert back to the menu. Once the event is triggered
+ * the page will fade in and then move to the main menu (index.html).
+ */
 AFRAME.registerComponent('prev-page', {
     schema: {
         on: {type: 'string'}
+    },
+
+    init: function() {
+        document.querySelector('body').style.opacity = 1;
     },
 
     update: function () {

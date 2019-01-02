@@ -61,6 +61,9 @@ function extractAjaxData(data, folder) {
 
     // Add the interactable enitities
     addEntities(ids);
+
+    // Finish loading
+
 }
 
 /**
@@ -124,6 +127,14 @@ function addEntities(ids) {
     image_groups.set_group_next();
 
     image_groups.write_to_storage();
+}
+
+function finishLoad() {
+    var sceneEl = document.querySelector("a-scene");
+    var splash = document.querySelector("#splash");
+    scene.addEventListener("loaded", function (e) {
+        splash.style.display = "none";
+    });
 }
 
 /*

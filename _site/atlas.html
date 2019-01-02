@@ -14,6 +14,8 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+        <link rel="stylesheet" type="text/css" href="css/load.css"/>
+
         <script src="components/set-image.js"></script>
         <script src="components/scroller.js"></script>
         <script src="components/view-icon.js"></script>
@@ -46,7 +48,7 @@
             </a-assets>
 
             <!-- 360-degree image. -->
-            <a-sky id="image-360" radius="10" src="#atlas_8"></a-sky>
+            <a-sky id="image-360" radius="10" src="#undefined"></a-sky>
 
             <!-- Image links. -->
             <a-entity id="image_thumbs">
@@ -94,7 +96,7 @@
                 </a-image>
             </a-entity>
 
-            <a-entity id="prev-page" position="-2 2.6 -5">
+            <a-entity id="prev-page" position="-2.25 2.85 -5">
                 <a-image class="previous"
                 src="#page-back"
                 height="0.5" width="0.5"
