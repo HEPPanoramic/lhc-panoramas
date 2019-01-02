@@ -56,3 +56,31 @@ AFRAME.registerComponent('scroll-right', {
         });
     }
 });
+
+/*
+ * A back button to revert back to the menu. Once the event is triggered
+ * the page will fade in and then move to the main menu (index.html).
+ */
+AFRAME.registerComponent('prev-page', {
+    schema: {
+        on: {type: 'string'}
+    },
+
+    init: function() {
+        document.querySelector('body').style.opacity = 1;
+    },
+
+    update: function () {
+        var data = this.data;
+        var el = this.el;
+
+        el.addEventListener(data.on, function() {
+            var href = "index.html"
+
+            document.querySelector('body').style.opacity = 0;
+            setTimeout(function() {
+                window.location.href = href;
+            }, 500);
+        });
+    }
+});
