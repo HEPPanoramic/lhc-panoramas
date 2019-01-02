@@ -31,12 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
             loading.style.display = 'none';
             splash.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
             startButton.style.opacity = 1;
-        }, 50);
+        }, 200);
     });
 
     startButton.addEventListener('click', function (e) {
         activateSoundsForTouch();
         splash.style.display = 'none';
-        emitEvent('scene-started', ['#planet', '#shuttle-light', '#shuttle-light', '#shuttle', '#shuttle']);
+        // emitEvent('scene-started', ['#planet', '#shuttle-light', '#shuttle-light', '#shuttle', '#shuttle']);
     });
 });
