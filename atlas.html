@@ -21,10 +21,12 @@
         <script src="components/view-icon.js"></script>
         <script src="components/load-assets.js"></script>
         <script src="components/atlas-choice.js"></script>
+        <script src="components/loading.js"></script>
     </head>
     <body>
         <div id="splash">
             <div class="loading"></div>
+            <div class="start-button">Explore Atlas</div>
         </div>
         <a-scene>
             <a-assets>
@@ -96,6 +98,7 @@
                 </a-image>
             </a-entity>
 
+            <!--Page Back Icon-->
             <a-entity id="prev-page" position="-2.25 2.85 -5">
                 <a-image class="previous"
                 src="#page-back"
