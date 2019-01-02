@@ -6,7 +6,7 @@
         <hr>
         <ul>
             {% for image in site.static_files %}
-                {% if image.path contains '/images/' %}
+                {% if image.path contains page.folder %}
                     <li><a href="{{ image.name }}">{{ image.name }}</a>
                 {% endif %}
             {% endfor %}
