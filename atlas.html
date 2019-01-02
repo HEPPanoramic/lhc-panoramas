@@ -30,6 +30,7 @@
                     <img id="left-arrow" crossorigin="anonymous" src="assets/backward.png"/>
                     <img id="right-arrow" crossorigin="anonymous" src="assets/forward.png"/>
                     <img id="view-icon" crossorigin="anonymous" src="assets/view_icon.png"/>
+                    <img id="page-back" crossorigin="anonymous" src="assets/prev_page.png"/>
                 </div>
                 <script id="link" type="text/html">
                     <a-entity class="link"
@@ -90,6 +91,19 @@
                 event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
                 event-set__4="_event: mouseleave; scale: 1 1 1"
                 view-icon="on: click">
+                </a-image>
+            </a-entity>
+
+            <a-entity id="prev-page" position="-2 2.6 -5">
+                <a-image class="previous"
+                src="#page-back"
+                height="0.5" width="0.5"
+                material="opacity: 1.0; transparent: true"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                prev-page="on: click">
                 </a-image>
             </a-entity>
 

@@ -56,3 +56,23 @@ AFRAME.registerComponent('scroll-right', {
         });
     }
 });
+
+AFRAME.registerComponent('prev-page', {
+    schema: {
+        on: {type: 'string'}
+    },
+
+    update: function () {
+        var data = this.data;
+        var el = this.el;
+
+        el.addEventListener(data.on, function() {
+            var href = "index.html"
+
+            document.querySelector('body').style.opacity = 0;
+            setTimeout(function() {
+                window.location.href = href;
+            }, 500);
+        });
+    }
+});
