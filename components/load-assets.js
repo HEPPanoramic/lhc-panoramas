@@ -17,8 +17,6 @@ function makeAjaxCall(url, folder, callback){
     xhr.open("GET", url, true);
     xhr.send();
 
-    console.log("------------------");
-    console.log(url);
     xhr.onreadystatechange = function(){
         if (xhr.readyState === 4){
             if (xhr.status === 200){

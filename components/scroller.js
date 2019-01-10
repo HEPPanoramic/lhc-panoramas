@@ -11,8 +11,21 @@ AFRAME.registerComponent('scroll-left', {
         var data = this.data;
         var el = this.el;
 
+        var image_groups_left = null;
+
+        try {
+            image_groups_left = new ImageGroups();
+            image_groups_left.pull_from_storage();
+            if (image_groups_left.size() == 1) {
+                document.querySelector("right-scroller").setAttribute("visible", false);
+                document.querySelector("left-scroller").setAttribute("visible", false);
+            }
+        } catch (err) {
+            console.log("Unable to remove arrows")
+        }
+
         el.addEventListener(data.on, function() {
-            var image_groups_left = new ImageGroups();
+            image_groups_left = new ImageGroups();
             image_groups_left.pull_from_storage();
 
             var index = image_groups_left.get_index();
