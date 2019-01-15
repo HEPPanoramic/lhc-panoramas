@@ -11,8 +11,21 @@ AFRAME.registerComponent('scroll-left', {
         var data = this.data;
         var el = this.el;
 
+        var image_groups_left = null;
+
+        try {
+            image_groups_left = new ImageGroups();
+            image_groups_left.pull_from_storage();
+            if (image_groups_left.get_size() == 1) {
+                document.querySelector("#right-scroller").setAttribute("visible", false);
+                document.querySelector("#left-scroller").setAttribute("visible", false);
+            }
+        } catch (err) {
+            console.log("Unable to remove arrows")
+        }
+
         el.addEventListener(data.on, function() {
-            var image_groups_left = new ImageGroups();
+            image_groups_left = new ImageGroups();
             image_groups_left.pull_from_storage();
 
             var index = image_groups_left.get_index();
@@ -53,6 +66,34 @@ AFRAME.registerComponent('scroll-right', {
             }
 
             var index = image_groups_right.get_index();
+        });
+    }
+});
+
+/*
+ * A back button to revert back to the menu. Once the event is triggered
+ * the page will fade in and then move to the main menu (index.html).
+ */
+AFRAME.registerComponent('prev-page', {
+    schema: {
+        on: {type: 'string'}
+    },
+
+    init: function() {
+        document.querySelector('body').style.opacity = 1;
+    },
+
+    update: function () {
+        var data = this.data;
+        var el = this.el;
+
+        el.addEventListener(data.on, function() {
+            var href = "index.html"
+
+            document.querySelector('body').style.opacity = 0;
+            setTimeout(function() {
+                window.location.href = href;
+            }, 500);
         });
     }
 });
