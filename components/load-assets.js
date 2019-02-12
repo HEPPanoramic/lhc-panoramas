@@ -12,7 +12,7 @@ var images = [];
  * @param  String     url        uri to the folder to extract images
  * @param  {Function} callback   The  function that is used to process the data
  */
-function makeAjaxCall(url, folder, callback){
+function makeAjaxCall(url, folder, thumbnails, callback){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.send();
@@ -22,10 +22,10 @@ function makeAjaxCall(url, folder, callback){
             if (xhr.status === 200){
                 console.log("xhr done successfully");
                 var resp = xhr.responseText;
-                callback(resp, folder);
+                callback(resp, folder, thumbnails);
             } else if (!url.match(/\.(html)$/)) {
                 console.log("processed failed trying with linking.html for jekyll")
-                makeAjaxCall(url + "listing.html", folder, callback);
+                makeAjaxCall(url + "listing.html", folder, thumbnails, callback);
             } else {
                 console.log("xhr failed");
             }
@@ -42,7 +42,7 @@ function makeAjaxCall(url, folder, callback){
  * @param  String data   The XML response in string form to be parsed
  * @param  String folder The URI to the folder
  */
-function extractAjaxData(data, folder) {
+function extractAjaxData(data, folder, thumbnails) {
     var images = [];
     var ids = [];
     $(data).find("a").attr("href", function(i, val) {
@@ -55,7 +55,7 @@ function extractAjaxData(data, folder) {
     });
 
     // Create the image components
-    addImages(images, ids, folder, establishSky);
+    addImages(images, ids, folder, thumbnails, establishSky);
 
     // Add the interactable enitities
     addEntities(ids);
@@ -70,7 +70,7 @@ function extractAjaxData(data, folder) {
  * @param Array  ids    An array of all the names of the images
  * @param String folder The URI to the folder
  */
-function addImages(images, ids, folder, callback) {
+function addImages(images, ids, folder, thumbnails, callback) {
     var divEl = document.querySelector("div#images");
     for(var i=0; i < images.length; i++) {
         // Create image tags
@@ -84,7 +84,7 @@ function addImages(images, ids, folder, callback) {
         let imgThumb = document.createElement('img');
         imgThumb.setAttribute('id', ids[i] + '-thumb');
         imgThumb.setAttribute('crossorigin', 'anonymous');
-        imgThumb.setAttribute('src', folder + images[i]);
+        imgThumb.setAttribute('src', thumbnails + images[i]);
         divEl.append(imgThumb);
     }
 

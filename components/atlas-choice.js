@@ -1,4 +1,5 @@
-var folder = 'real_images/atlas/';
+var folder = 'images/atlas/';
+var thumbnails = 'images/atlas_thumb/';
 
 // Call makeAjaxCall which will cascade into the other functions
-makeAjaxCall(folder, folder, extractAjaxData);
+makeAjaxCall(folder, folder, thumbnails, extractAjaxData);
