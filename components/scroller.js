@@ -13,17 +13,6 @@ AFRAME.registerComponent('scroll-left', {
 
         var image_groups_left = null;
 
-        try {
-            image_groups_left = new ImageGroups();
-            image_groups_left.pull_from_storage();
-            if (image_groups_left.get_size() == 1) {
-                document.querySelector("#right-scroller").setAttribute("visible", false);
-                document.querySelector("#left-scroller").setAttribute("visible", false);
-            }
-        } catch (err) {
-            console.log("Unable to remove arrows")
-        }
-
         el.addEventListener(data.on, function() {
             image_groups_left = new ImageGroups();
             image_groups_left.pull_from_storage();
