@@ -1,4 +1,4 @@
 ---
 layout: "images"
-folder: "/real_images/cms/"
+folder: "/images/atlas/"
 ---
