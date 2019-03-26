@@ -208,11 +208,6 @@ class ImageGroups {
     set_group_next() {
         let index = this.index;
 
-        if (index == this.size) {
-            console.warn("Requesting more than needed");
-            return; // Do nothing if there is a lone group
-        }
-
         // Remove current grouping
         $(".group" + index).each(function (i, e) {
             e.setAttribute("visible", false);
@@ -220,6 +215,12 @@ class ImageGroups {
 
         // Increment the grouping index
         index += 1;
+
+        if (index > this.get_size()) {
+            index = 1;
+            for(int j=0; j < this.get_size(); j++)
+                this.shift_position(false);
+        }
 
         // Make the new group visible
         $(".group" + index).each(function (i, e) {
@@ -243,8 +244,8 @@ class ImageGroups {
 
         // Can't go to a group cluster that is negative or does not exist
         if(index == 1) {
-            console.warn("Requesting negative integer");
-            return;
+            // console.warn("Requesting negative integer");
+            // return;
         }
 
         // Remove current grouping
@@ -253,6 +254,12 @@ class ImageGroups {
         });
 
         index -= 1;
+
+        if(index == 0) {
+            index = this.get_size();
+            for(var j=0; j < index; j++)
+                this.shift_position(true);
+        }
 
         // Make new grouping visible
         $(".group" + index).each(function (i, e) {

@@ -1,3 +1,7 @@
+import {
+    makeAjaxCall
+} from 'load-assets';
+
 var folder = 'images/cms/';
 var thumbnails = 'images/cms/';
 

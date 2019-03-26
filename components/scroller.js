@@ -19,13 +19,13 @@ AFRAME.registerComponent('scroll-left', {
 
             var index = image_groups_left.get_index();
 
-            if (index > 1) {
-                console.log("New index: " + image_groups_left.index);
-                image_groups_left.set_group_prev();
-                image_groups_left.write_to_storage();
-            } else {
-                console.warn("Index out of range-left");
-            }
+            // if (index > 1) {
+            console.log("New index: " + image_groups_left.index);
+            image_groups_left.set_group_prev();
+            image_groups_left.write_to_storage();
+            // } else {
+            //     console.warn("Index out of range-left");
+            // }
         });
     }
 });
