@@ -218,7 +218,7 @@ class ImageGroups {
 
         if (index > this.get_size()) {
             index = 1;
-            for(int j=0; j < this.get_size(); j++)
+            for(var j=0; j < this.get_size()-1; j++)
                 this.shift_position(false);
         }
 

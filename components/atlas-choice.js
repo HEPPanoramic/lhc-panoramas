@@ -1,7 +1,3 @@
-import {
-    makeAjaxCall
-} from 'load-assets';
-
 var folder = 'images/atlas/';
 var thumbnails = 'images/atlas_thumb/';
 
