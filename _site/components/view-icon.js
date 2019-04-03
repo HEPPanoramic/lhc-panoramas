@@ -11,7 +11,8 @@ AFRAME.registerComponent('view-icon', {
             var enitiesEl = ["#image_thumbs",
                              "#left-scroller",
                              "#right-scroller",
-                             "#title",
+                             // "#title1",
+                             // "#title2",
                              "#prev-page"];
             enitiesEl.map(function (e) {
                 var entity =  document.querySelector(e);

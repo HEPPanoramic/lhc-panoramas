@@ -84,6 +84,7 @@ function addImages(images, ids, folder, thumbnails, callback) {
         let imgThumb = document.createElement('img');
         imgThumb.setAttribute('id', ids[i] + '-thumb');
         imgThumb.setAttribute('crossorigin', 'anonymous');
+        imgThumb.setAttribute('border', '5');
         imgThumb.setAttribute('src', thumbnails + images[i]);
         divEl.append(imgThumb);
     }
