@@ -4,6 +4,10 @@
         <meta charset="utf-8">
         <title>ATLAS Panorama</title>
         <meta name="description" content="ATLAS Panorama Webpage - A-Frame"/>
+        <meta aframe-injected name="viewport" content="width=device-width,
+        initial-scale=1,maximum-scale=1,shrink-to-fit=no, user-scalable=no,minimal-ui"/>
+        <meta aframe-injected name="mobile-web-app-capable" content="yes"/>
+        <meta aframe-injected name="theme-color" content="black"/>
         <link rel="icon" type="image/png" href="logo/cern_logo.png"/>
 
         <script src="vendor/aframe/aframe.min.js"></script>
@@ -100,7 +104,7 @@
             </a-entity>
 
             <!--Page Back Icon-->
-            <a-entity id="prev-page" position="-2.25 2.85 -5">
+            <!-- <a-entity id="prev-page" position="-2.25 2.85 -5">
                 <a-image class="previous"
                 src="#page-back"
                 height="0.5" width="0.5"
@@ -111,7 +115,7 @@
                 event-set__4="_event: mouseleave; scale: 1 1 1"
                 prev-page="on: click">
                 </a-image>
-            </a-entity>
+            </a-entity> -->
 
             <!--Add the text-->
             <a-entity id="title1" text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
