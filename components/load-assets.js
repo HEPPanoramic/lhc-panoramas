@@ -98,10 +98,8 @@ function addImages(images, ids, folder, thumbnails, callback) {
  * @param  String image The image to set as the default sky
  */
 function establishSky(image) {
-    window.onload = function () {
-        var skyEl = document.querySelector("a-sky");
-        skyEl.setAttribute("src", "#"+image);
-    }
+    var skyEl = document.querySelector("a-sky");
+    skyEl.setAttribute("src", "#"+image);
 }
 
 /**

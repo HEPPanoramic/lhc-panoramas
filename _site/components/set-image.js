@@ -9,7 +9,7 @@ AFRAME.registerComponent('set-image', {
     on: {type: 'string'},
     target: {type: 'selector'},
     src: {type: 'string'},
-    dur: {type: 'number', default: 1000}
+    dur: {type: 'number', default: 300}
   },
 
   init: function () {
