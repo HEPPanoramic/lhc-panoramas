@@ -64,12 +64,12 @@
 
             <!-- Image links. -->
             <a-entity id="image_thumbs">
-                <a-entity id="links_top" layout="type: line; margin: 1.25" position="-1.5 1.5 -4"></a-entity>
-                <a-entity id="links_bottom" layout="type: line; margin: 1.25" position="-1.5 0.25 -4"></a-entity>
+                <a-entity id="links_top" layout="type: line; margin: 1.25" position="-1.5 1.0 -4.25"></a-entity>
+                <a-entity id="links_bottom" layout="type: line; margin: 1.25" position="-1.5 -.25 -4.25"></a-entity>
             </a-entity>
 
             <!--Scrollers-->
-            <a-entity id="left-scroller" position="-2.50 1.0 -4">
+            <a-entity id="left-scroller" position="-2.50 0.5 -4">
                 <a-image class="scroll-left"
                 src="#left-arrow"
                 height="2" width="1"
@@ -81,7 +81,7 @@
                 scroll-left="on: click">
                 </a-image>
             </a-entity>
-            <a-entity id="right-scroller" position="2 1.0 -4">
+            <a-entity id="right-scroller" position="2 0.5 -4">
                 <a-image class="scroll-right"
                 src="#right-arrow"
                 height="2" width="1"
@@ -95,7 +95,7 @@
             </a-entity>
 
             <!--View Icon-->
-            <a-entity id="view-icon" position="2 2.6 -5">
+            <a-entity id="view-icon" position="2 2.2 -5">
                 <a-image class="viewer"
                 src="#view-icon"
                 height="0.25" width="0.25"
@@ -126,16 +126,25 @@
             <a-entity id="title1" text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
             font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/cuprum/Cuprum-BoldItalic.json;
             align: center;"
-            position="0 2.5 -5" scale="10 10 10"></a-entity>
+            position="0 2.0 -5" scale="10 10 10"></a-entity>
             <a-entity id="title2" text="value: ATLAS Panorama; color: white; shader: msdf;
             font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/cuprum/Cuprum-BoldItalic.json;
             align: center;"
-            position="0 2.5 -5" scale="10.2 10.25 9.25"></a-entity>
+            position="0 2.0 -5" scale="10.2 10.25 9.25"></a-entity>
 
             <!-- Camera + cursor. -->
-            <a-camera>
-                <a-cursor id="cursor"></a-cursor>
-            </a-camera>
+            <a-entity camera look-controls>
+
+
+            	<a-cursor id="cursor"
+                      animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 10"
+                      animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 10"
+                      event-set__1="_event: mouseenter; color: springgreen"
+                      event-set__2="_event: mouseleave; color: black"
+                      fuse="true"
+                      raycaster="objects: .link, .scroll-left, .scroll-right, .viewer">
+                </a-cursor>
+            </a-entity>
         </a-scene>
     </body>
 </html>
