@@ -40,6 +40,7 @@ AFRAME.registerComponent('scroll-right', {
         var el = this.el;
 
         el.addEventListener(data.on, function() {
+            var t0 = performance.now();
             var image_groups_right = new ImageGroups();
             image_groups_right.pull_from_storage();
 
@@ -55,6 +56,9 @@ AFRAME.registerComponent('scroll-right', {
             }
 
             var index = image_groups_right.get_index();
+            var t1 = performance.now();
+
+            console.log("Call to doSomething took: " + (t1-t0) + "milliseconds");
         });
     }
 });
