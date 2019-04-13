@@ -100,6 +100,10 @@ function addImages(images, ids, folder, thumbnails, callback) {
 function establishSky(image) {
     var skyEl = document.querySelector("a-sky");
     skyEl.setAttribute("src", "#"+image);
+    // window.onload = function() {
+    //     var skyEl = document.querySelector("a-sky");
+    //     skyEl.setAttribute("src", "#"+image);
+    // };
 }
 
 /**

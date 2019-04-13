@@ -10,10 +10,10 @@ AFRAME.registerComponent('view-icon', {
         el.addEventListener(data.on, function() {
             var enitiesEl = ["#image_thumbs",
                              "#left-scroller",
-                             "#right-scroller",
+                             "#right-scroller"
                              // "#title1",
                              // "#title2",
-                             "#prev-page"];
+                             /*"#prev-page"*/];
             enitiesEl.map(function (e) {
                 var entity =  document.querySelector(e);
                 entity.setAttribute("visible", !(entity.getAttribute("visible")));
