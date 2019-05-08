@@ -119,9 +119,22 @@
             position="-0.25 2.9 -5" scale="10 10 10"></a-entity>
 
             <!-- Camera + cursor. -->
-            <a-camera>
-                <a-cursor id="cursor"></a-cursor>
-            </a-camera>
+            
+            <!-- simple cursor -->
+            <!-- <a-cursor id="cursor"
+                  raycaster="objects: .link, .scroll-left, .scroll-right, .previous, .viewer">
+            </a-cursor> -->
+
+            <!-- animated cursor -->
+            <a-cursor id="cursor"
+              animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+              animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+              event-set__1="_event: mouseenter; color: springgreen"
+              event-set__2="_event: mouseleave; color: black"
+              fuse="true"
+              raycaster="objects: .link, .scroll-left, .scroll-right, .previous, .viewer">
+            </a-cursor>
+
         </a-scene>
     </body>
 </html>
