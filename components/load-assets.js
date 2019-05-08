@@ -65,7 +65,7 @@ function extractAjaxData(data, folder, thumbnails) {
 }
 
 /**
- * Adds the image entities to be later accessed by other enities
+ * Adds the image entities to be later accessed by other entities
  * @param Array  images An array of all the image filenames
  * @param Array  ids    An array of all the names of the images
  * @param String folder The URI to the folder
@@ -94,7 +94,7 @@ function addImages(images, ids, folder, thumbnails, callback) {
 }
 
 /**
- * Sets the default panorma image for the initial  website
+ * Sets the default panorama image for the initial  website
  * @param  String image The image to set as the default sky
  */
 function establishSky(image) {
