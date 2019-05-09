@@ -4,11 +4,12 @@
         <meta charset="utf-8">
         <title>ATLAS Panorama</title>
         <meta name="description" content="ATLAS Panorama Webpage - A-Frame"/>
-        <link rel="icon" type="image/png" href="logo/cern_logo.png"/>
 
-        <script src="vendor/aframe/aframe.min.js"></script>
+        <!-- favico -->
+        <!-- <link rel="icon" type="image/png" href="logo/cern_logo.png"/> -->
+
         <!-- <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script> -->
-
+        <script src="vendor/aframe/aframe.min.js"></script>
         <script src="vendor/aframe/aframe-animation-component.min.js"></script>
         <script src="vendor/aframe/aframe-event-set-component.min.js"></script>
         <script src="vendor/aframe/aframe-layout-component.min.js"></script>
@@ -123,10 +124,14 @@
             </a-entity>
 
             <!--Add the text-->
-            <a-entity id="title1" text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
+            <!-- <a-entity id="title1" text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
             font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/cuprum/Cuprum-BoldItalic.json;
             align: center;"
-            position="0 2.0 -5" scale="10 10 10"></a-entity>
+            position="0 2.0 -5" scale="10 10 10"></a-entity> -->
+            <a-entity id="title1" text="value: ATLAS Panorama; color:  #C70039; shader: msdf;
+            font:kelsonsans;
+            align: center;"
+            position="0 2.35 -5" scale="10 10 10"></a-entity>
 
             <!-- Add white, highlighting background text -->
             <!-- <a-entity id="title2" text="value: ATLAS Panorama; color: white; shader: msdf;
