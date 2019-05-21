@@ -1,0 +1,8 @@
+atlas_1, "cavern ATLAS 360 panorama", https://cds.cern.ch/record/2221109,
+atlas_2, "ATLAS cavern with people working", https://cds.cern.ch/record/2259303,
+atlas_3, "cavern ATLAS level 1", https://cds.cern.ch/record/2259303,
+atlas_4, "cavern ATLAS level 9", https://cds.cern.ch/record/2259303,
+atlas_5, "360 view in CERN ATLAS cavern", https://cds.cern.ch/record/2266681,
+atlas_6, "360 view in CERN ATLAS cavern", https://cds.cern.ch/record/2266681,
+atlas_7, "360 view in CERN ATLAS cavern", https://cds.cern.ch/record/2266681,
+atlas_8, "360 photo of ATLAS cavern facility", https://cds.cern.ch/record/2281311,
