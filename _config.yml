@@ -1,5 +1,5 @@
 defaults:
-    - scrope:
+    - scope:
         path: "images"
       values:
         image: true

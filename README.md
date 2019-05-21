@@ -10,11 +10,20 @@ The project uses the WebVR Framework A-Frame. Which makes 3D images accessible i
 * Explore the ATLAS facilities
 * For the tinyurl: <http://tinyurl.com/ATLAS-Panorama>
 
+## Team
+
 Author: Thomas McCauley <thomas.mccauley@cern.ch>
 
 Contributors:
+
  - Riccardo Maria Bianchi <riccardo.maria.bianchi@cern.ch>
+ - Claire Adam Bourdarios
  - Quinnan Gill
+
+Contacts:
+
+ - Thomas McCauley <thomas.mccauley@cern.ch>
+ - Riccardo Maria Bianchi <riccardo.maria.bianchi@cern.ch>
 
 ----
 
@@ -22,3 +31,12 @@ Credits:
 
 - ATLAS and CMS panoramic images: M.Brice/CERN
 - 'favicon': ["Virtual Reality" by 'pepf'](https://thenounproject.com/term/virtual-reality/272812/) from the Noun Project
+
+
+----
+
+## Developer's Notes
+
+### Thumbnails
+
+You can create thumbnails using this script: `image_tools/create_thumbnails.sh`. Instructions can be found in the script's code.
