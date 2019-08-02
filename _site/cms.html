@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ATLAS Panorama</title>
+        <meta name="description" content="ATLAS Panorama Webpage - A-Frame"/>
+
+        <!-- favicon -->
+        <!-- <link rel="icon" type="image/png" href="logo/cern_logo.png"/> -->
+
+        <script src="vendor/aframe/aframe.min.js"></script>
+        <script src="vendor/aframe/aframe-animation-component.min.js"></script>
+        <script src="vendor/aframe/aframe-event-set-component.min.js"></script>
+        <script src="vendor/aframe/aframe-layout-component.min.js"></script>
+        <script src="vendor/aframe/aframe-template-component.min.js"></script>
+
+        <script src="vendor/ajax/jquery.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/load.css"/>
+
+        <script src="components/set-image.js"></script>
+        <script src="components/scroller.js"></script>
+        <script src="components/view-icon.js"></script>
+        <script src="components/load-assets.js"></script>
+        <script src="components/cms-choice.js"></script>
+        <script src="components/loading.js"></script>
+    </head>
+    <body>
+        <div id="splash">
+            <div class="loading"></div>
+            <!-- <div class="start-button">Explore CMS</div> -->
+        </div>
+        <a-scene>
+            <a-assets>
+                <div id="images">
+                    <img id="left-arrow" crossorigin="anonymous" src="assets/backward.png"/>
+                    <img id="right-arrow" crossorigin="anonymous" src="assets/forward.png"/>
+                    <img id="view-icon" crossorigin="anonymous" src="assets/view_icon.png"/>
+                    <img id="no-view-icon" crossorigin="anonymous" src="assets/no_view.png"/>
+                    <img id="page-back" crossorigin="anonymous" src="assets/prev_page.png"/>
+                </div>
+                <script id="link" type="text/html">
+                    <a-entity class="link"
+                    geometry="primitive: plane; height: 1; width: 1"
+                    material="shader: flat; src: ${thumb}"
+                    event-set__1="_event: mousedown; scale: 1 1 1"
+                    event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                    event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                    event-set__4="_event: mouseleave; scale: 1 1 1"
+                    set-image="on: click; target: #image-360; src: ${src}">
+                    </a-entity>
+                </script>
+            </a-assets>
+
+            <!-- 360-degree image. -->
+            <a-sky id="image-360" radius="10" src="#atlas_8"></a-sky>
+
+            <!-- Image links. -->
+            <a-entity id="image_thumbs">
+                <a-entity id="links_top" layout="type: line; margin: 1.25" position="-1.5 1.5 -4"></a-entity>
+                <a-entity id="links_bottom" layout="type: line; margin: 1.25" position="-1.5 0.25 -4"></a-entity>
+            </a-entity>
+
+            <!--Scrollers-->
+            <a-entity id="left-scroller" position="-2.50 1.0 -4">
+                <a-image class="scroll-left"
+                src="#left-arrow"
+                height="2" width="1"
+                material="opacity: 1.0; transparent: true"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                scroll-left="on: click">
+                </a-image>
+            </a-entity>
+            <a-entity id="right-scroller" position="2 1.0 -4">
+                <a-image class="scroll-right"
+                src="#right-arrow"
+                height="2" width="1"
+                material="opacity: 1.0; transparent: true"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                scroll-right="on: click">
+                </a-image>
+            </a-entity>
+
+            <!--View Icon-->
+            <a-entity id="view-icon" position="1.5 2.6 -5">
+                <a-image class="viewer"
+                src="#view-icon"
+                height="0.25" width="0.25"
+                material="opacity: 1.0; transparent: true"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                view-icon="on: click">
+                </a-image>
+            </a-entity>
+
+            <!--Page Back Icon-->
+            <a-entity id="prev-page" position="-2.25 2.85 -5">
+                <a-image class="previous"
+                src="#page-back"
+                height="0.5" width="0.5"
+                material="opacity: 1.0; transparent: true"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                prev-page="on: click">
+                </a-image>
+            </a-entity>
+
+            <!--Add the text-->
+            <a-entity id="title" text="value: CMS Panorama; color:  #C70039; shader: msdf;
+            font:kelsonsans; align: center;"
+            position="-0.25 2.9 -5" scale="10 10 10"></a-entity>
+
+            <!-- Camera + cursor. -->
+            <a-entity camera look-controls>
+
+              <!-- simple cursor -->
+              <!-- <a-cursor id="cursor"
+                    raycaster="objects: .link, .scroll-left, .scroll-right, .previous, .viewer">
+              </a-cursor> -->
+
+              <!-- animated cursor -->
+              <a-cursor id="cursor"
+                animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                event-set__1="_event: mouseenter; color: springgreen"
+                event-set__2="_event: mouseleave; color: black"
+                fuse="true"
+                raycaster="objects: .link, .scroll-left, .scroll-right, .previous, .viewer">
+              </a-cursor>
+            </a-entity>
+        </a-scene>
+    </body>
+</html>
