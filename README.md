@@ -6,7 +6,7 @@ The project uses the WebVR Framework A-Frame. Which makes 3D images accessible i
 
 ## Usage
 * Use a [WebVR-enabled browser](<https://webvr.rocks/>)
-* Go to <https://HEPPanoramic.github.io/lhc-panoramas/>
+* Go to <http://lhc-panoramas.web.cern.ch> (Earlier, CMS-only version, cab be found here: <https://HEPPanoramic.github.io/lhc-panoramas/>)
 * Explore the ATLAS facilities
 * For the tinyurl: <http://tinyurl.com/ATLAS-Panorama>
 
