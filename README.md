@@ -30,6 +30,8 @@ Contacts:
 Credits:
 
 - ATLAS and CMS panoramic images: M.Brice/CERN
+- CMS button image &copy; CERN/CMS: <http://cds.cern.ch/record/1344500>
+- ATLAS button image &copy; CERN/ATLAS: <https://cds.cern.ch/record/910381>
 - 'favicon': ["Virtual Reality" by 'pepf'](https://thenounproject.com/term/virtual-reality/272812/) from the Noun Project
 
 

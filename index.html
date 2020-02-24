@@ -26,12 +26,21 @@
             <table>
                 <tr bgcolor="#2d5399">
                     <td>
-                        <img src="logo/cern_logo.png" class="header"/>
+                      <img src="logo/cms_logo.png" class="header"/>
+                    </td>
+                    <td>
+                        <!-- <img src="logo/cern_logo.png" class="header"/> -->
+                        <!-- <img src="logo/hsf_logo_whitebkg.png" class="header"/> -->
+                        LHC 360 Panoramas
+
+                    </td>
+                    <td>
+                      <img src="logo/atlas_logo_square.png" class="header"/>
                     </td>
                 </tr>
             </table>
             <h1 class="page_title">
-                Large Hadron Collider Panorama
+                Large Hadron Collider 360degrees Panoramas
             </h1>
             <p>
                 Come take a look into the place where particle magic takes place.
@@ -40,8 +49,30 @@
                 and CMS projects.
             </p>
 
+            <div class="div-grid">
+              <div class="row">
+                <div class="column">
+                  <div class="container-button">
+                    <a href="cms.html">
+                      <img src="display_images/cms_detector_front_M.jpg">
+                    </a>
+                    <button onclick="location.href='cms.html'" type="button" class="btn">CMS Experiment</button>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="container-button">
+                    <a href="atlas.html">
+                      <img src="display_images/atlas_detector_front_M.jpg">
+                    </a>
+                    <button onclick="location.href='atlas.html'" type="button" class="btn">ATLAS Experiment</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
             <!--CMS Hyperlink-->
-            <div class="container">
+            <!-- <div class="container">
                 <div>
                     <div onclick="transitionToPage('cms.html')">
                         <div id="left">
@@ -56,10 +87,10 @@
                     </div>
                 </div>
                 <div class="overlay">CMS Project Panorama</div>
-            </div>
+            </div> -->
 
             <!--ATLAS Hyperlink-->
-            <div class="container">
+            <!-- <div class="container">
                 <div>
                     <div onclick="transitionToPage('atlas.html')">
                         <div id="left">
@@ -74,29 +105,21 @@
                     </div>
                 </div>
                 <div class="overlay">ATLAS Project Panorama</div>
-            </div>
+            </div> -->
 
 
             <table>
                 <tr bgcolor="#2d5399">
                     <td>
                         <div style="display: inline-block; text-align: left;">
-                            <a href="https://aframe.io/">
-                                A-Frame Docs
-                            </a> <br />
-                            <a href="https://github.com/HEPPanoramic/lhc-panoramas">
-                                Github
-                            </a> <br />
-                            <a href="https://github.com/aframevr/aframe">
-                                A-Frame Github
-                            </a> <br />
+                            Source code available on <a href="https://github.com/HEPPanoramic/lhc-panoramas">Github</a> <br />
                         </div>
                     </td>
                     <td>
-                        <img src="logo/cern_logo.png" class="header"/>
+                      Kindly hosted by <a href="https://home.cern">CERN</a> <br />
                     </td>
                     <td>
-                        <br />
+                      Made with <a href="https://aframe.io/">A-Frame</a> <br />
                     </td>
                 </tr>
             </table>
