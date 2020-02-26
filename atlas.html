@@ -9,8 +9,8 @@
         <!-- <link rel="icon" type="image/png" href="logo/cern_logo.png"/> -->
 
         <!-- <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script> -->
-        <script src="vendor/aframe/aframe.min.js"></script>
-        <script src="vendor/aframe/aframe-animation-component.min.js"></script>
+        <script src="vendor/aframe/aframe-v1.0.4.min.js"></script>
+        <!-- <script src="vendor/aframe/aframe-animation-component.min.js"></script> -->
         <script src="vendor/aframe/aframe-event-set-component.min.js"></script>
         <script src="vendor/aframe/aframe-layout-component.min.js"></script>
         <script src="vendor/aframe/aframe-template-component.min.js"></script>
@@ -148,16 +148,45 @@
                 </a-cursor> -->
 
                 <!-- animated cursor -->
-                <a-cursor id="cursor"
+                <!-- <a-cursor id="cursor"
                   animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
                   animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
                   event-set__1="_event: mouseenter; color: springgreen"
                   event-set__2="_event: mouseleave; color: black"
                   fuse="true"
                   raycaster="objects: .link, .scroll-left, .scroll-right, .previous, .viewer">
-                </a-cursor>
+                </a-cursor> -->
 
+
+                <!-- NEW IMPLEMENTATIONS -->
+                <!-- SIMPLE -->
+                <!-- <a-entity cursor="fuse: true; fuseTimeout: 500"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                  material="color: black; shader: flat">
+                </a-entity> -->
+                <!-- WITH VISUAL FEEDBACK -->
+                <!-- <a-entity
+                  animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+                  animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+                  animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+                  cursor="fuse: true;"
+                  material="color: black; shader: flat"
+                  position="0 0 -3"
+                  geometry="primitive: ring">
+                </a-entity> -->
+                <a-entity
+                  animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+                  animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 500; from: 1 1 1; to: 0.1 0.1 0.1"
+                  animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+                  animation__mouseenter="property: color; startEvents: mouseenter; dur: 500; to: red"
+                  cursor="fuse: true;"
+                  material="color: black; shader: flat"
+                  position="0 0 -4"
+                  geometry="primitive: ring; radiusInner: 0.2; radiusOuter: 0.3">
+                </a-entity>
             </a-entity>
+
         </a-scene>
     </body>
 </html>
